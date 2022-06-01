@@ -6,6 +6,7 @@ const FormTitle = styled.p`
   font-weight: bold;
   text-align: center;
 `;
+
 const Form = styled.form`
   background: rgba(128, 128, 128, 0.2);
   width: 40%;
