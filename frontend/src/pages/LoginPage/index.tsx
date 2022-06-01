@@ -21,10 +21,14 @@ const Input = styled.input`
   border: 1px solid #bdbdbd;
 `;
 
+type Props = {
+  color?: "primary";
+};
+
 const Button = styled.button`
   color: white;
   font-weight: bold;
-  background: #5876a3;
+  background: ${(props: Props) => (props.color ? "#5876a3" : "white")};
   padding: 10px 30px;
   display: inline-block;
   border-radius: 5px;
@@ -33,12 +37,19 @@ const Button = styled.button`
   border: none;
   width: 30%;
 `;
-
 const MoveToPage = styled(Link)`
   color: #5876a3;
+  justify-content: center;
+  display: flex;
   text-decoration: none;
-  text-align: center;
   margin-bottom: 20px;
+  &:hover {
+    opacity: 0.5;
+  }
+`;
+
+const LinkWrapper = styled.div`
+  margin: 0px auto 20px auto;
 `;
 
 export const LoginPage: React.FC = () => {
@@ -60,9 +71,13 @@ export const LoginPage: React.FC = () => {
           //8文字以上設定する設定必要あり
           pattern="^[a-zA-Z\d]{8,100}"
         ></Input>
-        <Button>ログイン</Button>
-        <MoveToPage to="/">トップページに戻る</MoveToPage>
-        <MoveToPage to="/reset-password">パスワードを忘れた</MoveToPage>
+        <Button color="primary">ログイン</Button>
+        <LinkWrapper>
+          <MoveToPage to="/">トップページに戻る</MoveToPage>
+        </LinkWrapper>
+        <LinkWrapper>
+          <MoveToPage to="/reset-password">パスワードを忘れた</MoveToPage>
+        </LinkWrapper>
       </Form>
     </div>
   );
