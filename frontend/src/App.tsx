@@ -18,7 +18,7 @@ const App: React.FC = () => {
         {/* リセットページ */}
         <Route path="/todo" element={<TodoPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="*" element={<NotFoundPage />}></Route>
+        <Route path="/reset-password" element={<NotFoundPage />} />
       </Routes>
     </>
   );

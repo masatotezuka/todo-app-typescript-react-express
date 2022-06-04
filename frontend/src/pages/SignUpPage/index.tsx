@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useForm, SubmitHandler } from "react-hook-form";
+import axios from "axios";
+import { useNavigate, Navigate } from "react-router-dom";
 
 const FormTitle = styled.p`
   font-weight: bold;
@@ -59,38 +62,64 @@ const LinkWrapper = styled.div`
   margin: 0px auto 20px auto;
 `;
 
+type SignUpInputs = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+};
+
 export const SignUpPage: React.FC = () => {
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpInputs>();
+  const onSubmit: SubmitHandler<SignUpInputs> = async (data) => {
+    console.log(data);
+    const response = await axios.post(
+      "http://localhost:8000/api/sign-up",
+      data
+    );
+    if (response.data.authorization) {
+      console.log(response.data.authorization);
+      navigate("/todo", { replace: true });
+    } else {
+    }
+  };
+
   return (
     <>
-      <Form>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <FormTitle>新規登録</FormTitle>
         <HalfInputWrapper>
           <HalfInput
             type="text"
             placeholder="姓"
-            name="firstName"
             required
+            {...register("firstName")}
           ></HalfInput>
           <HalfInput
             type="text"
             placeholder="名"
-            name="lastName"
             required
+            {...register("lastName")}
           ></HalfInput>
         </HalfInputWrapper>
         <Input
           type="email"
           placeholder="メールアドレス"
-          name="email"
           required
+          {...register("email")}
         ></Input>
         <Input
           type="password"
           placeholder="パスワード（半角英数数字8文字以上）"
-          name="password"
           required
           //8文字以上設定する設定必要あり
           pattern="^[a-zA-Z\d]{8,100}"
+          {...register("password")}
         ></Input>
         <Button type="submit">登録する</Button>
         <LinkWrapper>
