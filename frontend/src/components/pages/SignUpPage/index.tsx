@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import { useNavigate, Navigate } from "react-router-dom";
-
+import { useAppDispatch } from "../../../app/hooks";
+import { login } from "../../../store/authSlice";
 const FormTitle = styled.p`
   font-weight: bold;
   text-align: center;
@@ -70,6 +71,7 @@ type SignUpInputs = {
 };
 
 export const SignUpPage: React.FC = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {
     register,
@@ -82,11 +84,12 @@ export const SignUpPage: React.FC = () => {
       "http://localhost:8000/api/sign-up",
       data
     );
-    if (response.data.authorization) {
-      console.log(response.data.authorization);
-      navigate("/todo", { replace: true });
-    } else {
-    }
+    // if (response.data.authorization) {
+    console.log(response.data);
+    dispatch(login());
+    navigate("/todo", { replace: true });
+    // } else {
+    // }
   };
 
   return (

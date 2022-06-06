@@ -37,7 +37,7 @@ const Button = styled.button`
   color: white;
   font-weight: bold;
   background: #5876a3;
-  padding: 10px 30px;
+  /* padding: 10px 30px; */
   display: inline-block;
   border-radius: 5px;
   text-decoration: none;
@@ -47,6 +47,7 @@ const Button = styled.button`
     cursor: pointer;
   }
 `;
+
 const TodoTableWrapper = styled.div`
   width: 80%;
   margin: 20px auto;

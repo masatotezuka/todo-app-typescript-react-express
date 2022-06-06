@@ -5,6 +5,7 @@ import { DataSource } from "typeorm";
 import { AppDataSource } from "../../../../ormconfig";
 import * as bcrypt from "bcrypt";
 import { UserError, ServerError } from "../../../helper/errorHandleHelper";
+import { jwtHelper } from "../../../helper/jwtHelper";
 const router = express.Router();
 
 router.post("/", async (req: Request, res: Response, next: NextFunction) => {
@@ -30,13 +31,13 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
       createdAt: new Date(),
       updateAt: new Date(),
     });
-    const newUser = await AppDataSource.manager.findOne(User, {
+    const newUser = await AppDataSource.manager.find(User, {
       where: { email: req.body.email },
     });
-    console.log("新規" + newUser);
-    //セッション作成
 
-    res.status(200).json({ authorization: true });
+    //セッション作成
+    const jwtToken = jwtHelper.createToken({ userId: newUser[0].id });
+    return res.status(200).cookie("jwtToken", jwtToken, { httpOnly: true });
   } catch (error) {
     if (error instanceof Error) {
       res.json({ message: error.message });
