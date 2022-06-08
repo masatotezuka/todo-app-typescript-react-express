@@ -14,19 +14,21 @@ git clone https://github.com/masatotezuka/todo-app-typescript-react-express.git
 
 `nvm install v14.18.1`
 
-#### 2. npm のインストール
+#### 2. node_modules のインストール
 
-サーバーサイドのパッケージインストール
+サーバーサイド
 
 ```
+cd todo-app-typescript-react-express
 npm ci
 ```
 
-クライアントサイドのパッケージインストール
+クライアントサイド
 
 ```
 cd frontend
 npm ci
+cd ../
 ```
 
 #### 3. postgreSQL の起動
@@ -34,6 +36,7 @@ npm ci
 ```
 brew services start postgresql;
 psql
+CREATE USER my_dev
 CREATE DATABASE todo_app_development OWNER my_dev;
 ```
 
