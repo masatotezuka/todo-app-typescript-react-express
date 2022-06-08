@@ -94,13 +94,9 @@ export const SignUpPage: React.FC = () => {
 
   return (
     <>
-      <FormWrapper>
-        <FormTitle>新規登録</FormTitle>
-        {/* RegisterForm */}
-        {/* リンク */}
-      </FormWrapper>
-
+      {/* RegisterForm */}
       <Form onSubmit={handleSubmit(onSubmit)}>
+        <FormTitle>新規登録</FormTitle>
         <HalfInputWrapper>
           <HalfInput
             type="text"
@@ -125,7 +121,7 @@ export const SignUpPage: React.FC = () => {
           type="password"
           placeholder="パスワード（半角英数数字8文字以上）"
           required
-          //8文字以上設定する設定必要あり
+          //TODO:8文字以上設定する設定必要あり
           pattern="^[a-zA-Z\d]{8,100}"
           {...register("password")}
         ></Input>
@@ -137,7 +133,3 @@ export const SignUpPage: React.FC = () => {
     </>
   );
 };
-
-const FormWrapper = styled.div`
-  padding: 50px 200px 0px 200px;
-`;
