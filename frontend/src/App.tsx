@@ -27,7 +27,7 @@ const App: React.FC = () => {
           path="/todo"
           element={
             <PrivateRoute
-              isLoggedIn={userLogin}
+              isLoggedIn={true}
               children={<TodoPage />}
             ></PrivateRoute>
           }
