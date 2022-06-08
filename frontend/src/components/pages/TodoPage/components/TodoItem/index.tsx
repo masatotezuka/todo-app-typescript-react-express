@@ -4,14 +4,6 @@ import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
 import { Tabs, Tab, TabList, TabPanel } from "react-tabs";
 import { Todo } from "../TodoList";
 
-type Props = {
-  id: number;
-  title: string;
-  description: string;
-  deadline: Date;
-  status: boolean;
-};
-
 export const TodoItem: React.FC<Todo[]> = (todos) => {
   return (
     <>
