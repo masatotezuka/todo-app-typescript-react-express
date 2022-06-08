@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import { useNavigate, Navigate } from "react-router-dom";
-import { useAppDispatch } from "../../../app/hooks";
-import { login } from "../../../store/authSlice";
+import { useAppDispatch } from "../../../../app/hooks";
+import { login } from "../../../../store/authSlice";
 const FormTitle = styled.p`
   font-weight: bold;
   text-align: center;

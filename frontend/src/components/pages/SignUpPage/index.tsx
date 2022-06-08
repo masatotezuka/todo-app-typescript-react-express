@@ -1,11 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useAppDispatch } from "../../../app/hooks";
 import { login } from "../../../store/authSlice";
+import { Link } from "../../../components/parts/Link";
+
 const FormTitle = styled.p`
   font-weight: bold;
   text-align: center;
@@ -131,7 +133,7 @@ export const SignUpPage: React.FC = () => {
         ></Input>
         <Button type="submit">登録する</Button>
         <LinkWrapper>
-          <MoveToPage to="/">Topページに戻る</MoveToPage>
+          <Link path="/" text="Topページに戻る"></Link>
         </LinkWrapper>
       </Form>
     </>
