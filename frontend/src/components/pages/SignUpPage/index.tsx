@@ -1,11 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-// import { Link } from "react-router-dom";
-import { useForm, SubmitHandler } from "react-hook-form";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../../app/hooks";
-import { login } from "../../../store/authSlice";
 import { Link } from "../../../components/parts/Link";
 import { SingUpForm } from "./SignUpForm";
 
