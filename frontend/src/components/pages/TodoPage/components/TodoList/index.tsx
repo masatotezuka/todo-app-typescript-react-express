@@ -58,10 +58,10 @@ export const TodoList: React.FC = () => {
             </Tab>
           </TabList>
           <TabPanel>
-            {/* <TodoItem todos={completedTodos}></TodoItem> */}
+            <TodoItem todos={completedTodos}></TodoItem>
           </TabPanel>
           <TabPanel>
-            {/* <TodoItem todos={completedTodos}></TodoItem> */}
+            <TodoItem todos={uncompletedTodos}></TodoItem>
           </TabPanel>
         </StyledTabs>
       </TodoTableWrapper>

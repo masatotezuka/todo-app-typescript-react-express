@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
-import { Tabs, Tab, TabList, TabPanel } from "react-tabs";
 import { Todo } from "../TodoList";
 
-export const TodoItem: React.FC<Todo[]> = (todos) => {
+type Props = {
+  todos: Todo[];
+};
+
+export const TodoItem = (props: Props) => {
   return (
     <>
       <TodoTable>
@@ -18,24 +21,31 @@ export const TodoItem: React.FC<Todo[]> = (todos) => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <CheckBox type="checkbox" name="todoStatus"></CheckBox>
-            </td>
-            {/* <td>{title}</td> */}
-            {/* <td>{description}</td> */}
-            {/* <td>{deadline.toString()}</td> */}
-            <td>
-              <IconButtonWrapper>
-                <IconButton>
-                  <TrashIcon></TrashIcon>
-                </IconButton>
-                <IconButton>
-                  <EditIcon></EditIcon>
-                </IconButton>
-              </IconButtonWrapper>
-            </td>
-          </tr>
+          {props.todos.map((todo) => {
+            return (
+              <>
+                <tr>
+                  <td>
+                    <CheckBox type="checkbox" name="todoStatus"></CheckBox>
+                  </td>
+                  <td>{todo.title}</td>
+                  <td>{todo.description}</td>
+                  {/* TODO:日付表示変更 */}
+                  <td>{todo.deadline.toString()}</td>
+                  <td>
+                    <IconButtonWrapper>
+                      <IconButton>
+                        <TrashIcon></TrashIcon>
+                      </IconButton>
+                      <IconButton>
+                        <EditIcon></EditIcon>
+                      </IconButton>
+                    </IconButtonWrapper>
+                  </td>
+                </tr>
+              </>
+            );
+          })}
         </tbody>
       </TodoTable>
     </>

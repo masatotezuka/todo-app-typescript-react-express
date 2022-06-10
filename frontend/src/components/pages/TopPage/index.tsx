@@ -1,33 +1,36 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { ButtonLink } from "../../parts/Button/ButtonLink";
 
-const ButtonWrapper = styled.div`
-  margin-top: 100px;
+const ButtonsWrapper = styled.div`
+  padding: 0px 600px;
+  padding-top: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 `;
 
-const Button = styled(Link)`
-  color: white;
-  font-weight: bold;
-  background: #5876a3;
-  padding: 10px 30px;
-  display: inline-block;
-  border-radius: 5px;
-  text-decoration: none;
-  margin-bottom: 30px;
+const ButtonWrapper = styled.div`
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 `;
 
 export const TopPage: React.FC = () => {
   return (
     <>
-      <ButtonWrapper>
-        <Button to="/sign-up">新規登録</Button>
-        <Button to="/login">ログイン</Button>
-      </ButtonWrapper>
+      <ButtonsWrapper>
+        <ButtonWrapper>
+          <ButtonLink path="/sign-up" text="新規登録"></ButtonLink>
+        </ButtonWrapper>
+        <ButtonWrapper>
+          <ButtonLink path="/login" text="ログイン"></ButtonLink>
+        </ButtonWrapper>
+      </ButtonsWrapper>
     </>
   );
 };

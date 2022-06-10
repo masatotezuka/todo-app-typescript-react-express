@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Button } from "../../../../parts/Button";
+import { Button } from "../../../../parts/Button/Button";
 import { InputText } from "../../../../parts/InputText";
 
 export const TodoAddForm: React.FC = () => {
@@ -10,22 +10,18 @@ export const TodoAddForm: React.FC = () => {
         <InputText
           type="text"
           placeholder="タイトルを入力してください。"
-          required="required"
+          required={true}
         ></InputText>
       </InputWrapper>
       <InputWrapper width="400px">
         <InputText
           type="text"
           placeholder="詳細を入力してください。"
-          required="required"
+          required={true}
         ></InputText>
       </InputWrapper>
       <InputWrapper width="150px">
-        <InputText
-          type="date"
-          placeholder="期限日"
-          required="required"
-        ></InputText>
+        <InputText type="date" placeholder="期限日" required={true}></InputText>
       </InputWrapper>
       <ButtonWrapper>
         <Button child="タスクの追加"></Button>

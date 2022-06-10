@@ -1,21 +1,20 @@
 import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { InputText } from "../../../../parts/InputText";
 import styled from "styled-components";
-import { Button } from "../../../../parts/Button/Button";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { InputText } from "../../../parts/InputText";
+import { Button } from "../../../parts/Button/Button";
 
-type LoginInputs = {
+type Inputs = {
   email: string;
-  password: string;
 };
 
-export const LoginForm = () => {
+export const ResetPasswordForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginInputs>();
-  const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
+  } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
   };
   return (
@@ -29,15 +28,6 @@ export const LoginForm = () => {
           ></InputText>
           {errors.email && "文字が入力されていません"}
         </InputWrapper>
-        <InputWrapper>
-          <InputText
-            type="text"
-            placeholder="パスワード"
-            register={register("password", { required: true })}
-          ></InputText>
-          {errors.password && "文字が入力されていません"}
-        </InputWrapper>
-
         <ButtonWrapper>
           <Button type="submit" child="ログイン"></Button>
         </ButtonWrapper>
