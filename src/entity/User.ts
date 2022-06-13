@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from "typeorm";
 import { Todo } from "./Todo";
 
 @Entity()
@@ -6,10 +13,10 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   firstName: string;
 
-  @Column()
+  @Column({ nullable: true })
   lastName: string;
 
   @Column({ unique: true, nullable: false })
@@ -18,18 +25,18 @@ export class User {
   @Column({ unique: true, nullable: false })
   password: string;
 
-  @Column()
+  @Column({ nullable: true })
   verificationToken: string;
 
-  @Column()
+  @Column({ nullable: true })
   verificationTokenExpiredAt: Date;
 
-  @OneToMany(() => Todo, (todo) => todo.user)
-  todos: Todo[];
+  // @OneToMany(() => Todo, (todo) => todo.user)
+  // todos: Todo[];
 
-  @Column()
+  @CreateDateColumn()
   createdAt: Date;
 
-  @Column()
+  @UpdateDateColumn()
   updateAt: Date;
 }

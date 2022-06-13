@@ -7,7 +7,7 @@ type Props = {
   todos: Todo[];
 };
 
-export const TodoItem = (props: Props) => {
+export const TodoItem = React.memo((props: Props) => {
   return (
     <>
       <TodoTable>
@@ -24,15 +24,15 @@ export const TodoItem = (props: Props) => {
           {props.todos.map((todo) => {
             return (
               <>
-                <tr>
-                  <td>
+                <tr key={todo.id.toString()}>
+                  <td key={todo.id.toString()}>
                     <CheckBox type="checkbox" name="todoStatus"></CheckBox>
                   </td>
-                  <td>{todo.title}</td>
-                  <td>{todo.description}</td>
+                  <td key={todo.id.toString()}>{todo.title}</td>
+                  <td key={todo.id.toString()}>{todo.description}</td>
                   {/* TODO:日付表示変更 */}
-                  <td>{todo.deadline.toString()}</td>
-                  <td>
+                  <td key={todo.id.toString()}>{todo.deadline.toString()}</td>
+                  <td key={todo.id.toString()}>
                     <IconButtonWrapper>
                       <IconButton>
                         <TrashIcon></TrashIcon>
@@ -50,7 +50,7 @@ export const TodoItem = (props: Props) => {
       </TodoTable>
     </>
   );
-};
+});
 
 const TodoTable = styled.table`
   width: 100%;

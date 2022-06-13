@@ -7,7 +7,7 @@ import { LoginPage } from "./components/pages/LoginPage";
 import { NotFoundPage } from "./components/pages/NotFoundPage";
 import { ResetPasswordPage } from "./components/pages/UserPage";
 import { PrivateRoute } from "./PrivateRouter";
-import { useAppSelector } from "./app/hooks";
+import { useAppSelector } from "./hooks";
 import axios from "axios";
 import styled from "styled-components";
 axios.defaults.withCredentials = true;

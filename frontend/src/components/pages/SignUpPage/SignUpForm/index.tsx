@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../../../app/hooks";
+import { useAppDispatch } from "../../../../hooks";
 import { login } from "../../../../store/authSlice";
 import { InputText } from "../../../parts/InputText";
 import { Button } from "../../../parts/Button/Button";
@@ -101,6 +101,6 @@ const NameInputWrapper = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  padding: 0px 200px;
+  padding: 0px 100px;
   margin-top: 20px;
 `;

@@ -29,7 +29,7 @@ export const ResetPasswordForm = () => {
           {errors.email && "文字が入力されていません"}
         </InputWrapper>
         <ButtonWrapper>
-          <Button type="submit" child="ログイン"></Button>
+          <Button type="submit" child="パスワードをリセット"></Button>
         </ButtonWrapper>
       </Form>
     </>
@@ -49,6 +49,6 @@ const InputWrapper = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  padding: 0px 200px;
+  padding: 0px 100px;
   margin-top: 20px;
 `;

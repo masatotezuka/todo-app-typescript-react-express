@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { ButtonLink } from "../../parts/Button/ButtonLink";
 
 const ButtonsWrapper = styled.div`
-  padding: 0px 600px;
+  padding: 0px 550px;
   padding-top: 100px;
   display: flex;
   align-items: center;

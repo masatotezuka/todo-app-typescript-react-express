@@ -47,6 +47,7 @@ export const TodoList: React.FC = () => {
   const uncompletedTodos: Todo[] = todos.filter((todo) => !todo.status);
   return (
     <>
+      {/* TODO:Warning 修正 */}
       <TodoTableWrapper>
         <StyledTabs>
           <TabList className="tab-lists">
@@ -69,7 +70,6 @@ export const TodoList: React.FC = () => {
   );
 };
 
-//Todoリスト
 const TodoTableWrapper = styled.div`
   margin-top: 30px;
 `;

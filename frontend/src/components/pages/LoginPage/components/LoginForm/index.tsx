@@ -59,6 +59,6 @@ const InputWrapper = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  padding: 0px 200px;
+  padding: 0px 100px;
   margin-top: 20px;
 `;

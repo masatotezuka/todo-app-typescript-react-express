@@ -2,30 +2,64 @@ import React from "react";
 import styled from "styled-components";
 import { Button } from "../../../../parts/Button/Button";
 import { InputText } from "../../../../parts/InputText";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useAppDispatch, useAppSelector } from "../../../../../hooks";
+import { createUserTodo } from "../../../../../store/taskSlice";
 
-export const TodoAddForm: React.FC = () => {
+type Inputs = {
+  title: string;
+  description: string;
+  deadline: Date;
+};
+
+export const TodoAddForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<Inputs>();
+  const dispatch = useAppDispatch();
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    dispatch(
+      createUserTodo({
+        title: data.title,
+        description: data.description,
+        deadline: data.deadline,
+        status: false,
+      })
+    );
+    reset();
+  };
+
   return (
     <TodoAddWrapper>
-      <InputWrapper width="300px">
-        <InputText
-          type="text"
-          placeholder="タイトルを入力してください。"
-          required={true}
-        ></InputText>
-      </InputWrapper>
-      <InputWrapper width="400px">
-        <InputText
-          type="text"
-          placeholder="詳細を入力してください。"
-          required={true}
-        ></InputText>
-      </InputWrapper>
-      <InputWrapper width="150px">
-        <InputText type="date" placeholder="期限日" required={true}></InputText>
-      </InputWrapper>
-      <ButtonWrapper>
-        <Button child="タスクの追加"></Button>
-      </ButtonWrapper>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <InputWrapper width="300px">
+          <InputText
+            type="text"
+            placeholder="タイトルを入力してください。"
+            register={register("title", { required: true })}
+          ></InputText>
+        </InputWrapper>
+        <InputWrapper width="400px">
+          <InputText
+            type="text"
+            placeholder="詳細を入力してください。"
+            register={register("description", { required: true })}
+          ></InputText>
+        </InputWrapper>
+        <InputWrapper width="150px">
+          <InputText
+            type="date"
+            placeholder="期限日"
+            register={register("deadline", { required: true })}
+          ></InputText>
+        </InputWrapper>
+        <ButtonWrapper>
+          <Button child="タスクの追加" type="submit"></Button>
+        </ButtonWrapper>
+      </Form>
     </TodoAddWrapper>
   );
 };
@@ -36,6 +70,11 @@ const TodoAddWrapper = styled.div`
   width: 100%;
   justify-content: space-around;
   align-items: center;
+`;
+
+const Form = styled.form`
+  display: flex;
+  width: 100%;
 `;
 
 type Props = {
