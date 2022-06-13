@@ -1,53 +1,34 @@
 import React from "react";
 import styled from "styled-components";
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
-import { Todo } from "../TodoList";
+import { Todo } from "../index";
 
 type Props = {
-  todos: Todo[];
+  todo: Todo;
 };
 
-export const TodoItem = React.memo((props: Props) => {
+export const TodoItem = React.memo(({ todo }: Props) => {
   return (
     <>
-      <TodoTable>
-        <thead>
-          <tr>
-            <th className="status-header"></th>
-            <th className="title-header">タイトル</th>
-            <th className="description-header">詳細</th>
-            <th className="deadline-header">期日</th>
-            <th className="edit-header"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.todos.map((todo) => {
-            return (
-              <>
-                <tr key={todo.id.toString()}>
-                  <td key={todo.id.toString()}>
-                    <CheckBox type="checkbox" name="todoStatus"></CheckBox>
-                  </td>
-                  <td key={todo.id.toString()}>{todo.title}</td>
-                  <td key={todo.id.toString()}>{todo.description}</td>
-                  {/* TODO:日付表示変更 */}
-                  <td key={todo.id.toString()}>{todo.deadline.toString()}</td>
-                  <td key={todo.id.toString()}>
-                    <IconButtonWrapper>
-                      <IconButton>
-                        <TrashIcon></TrashIcon>
-                      </IconButton>
-                      <IconButton>
-                        <EditIcon></EditIcon>
-                      </IconButton>
-                    </IconButtonWrapper>
-                  </td>
-                </tr>
-              </>
-            );
-          })}
-        </tbody>
-      </TodoTable>
+      <tr>
+        <td>
+          <CheckBox type="checkbox" name="todoStatus"></CheckBox>
+        </td>
+        <td>{todo.title}</td>
+        <td>{todo.description}</td>
+        {/* TODO:日付表示変更 */}
+        <td>{todo.deadline.toString()}</td>
+        <td>
+          <IconButtonWrapper>
+            <IconButton>
+              <TrashIcon></TrashIcon>
+            </IconButton>
+            <IconButton>
+              <EditIcon></EditIcon>
+            </IconButton>
+          </IconButtonWrapper>
+        </td>
+      </tr>
     </>
   );
 });
