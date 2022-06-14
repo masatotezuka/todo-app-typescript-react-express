@@ -3,17 +3,21 @@ import styled from "styled-components";
 import { Tabs, Tab, TabList, TabPanel } from "react-tabs";
 import { TodoItem } from "./TodoItem";
 import { useAppDispatch, useAppSelector } from "../../../../../hooks";
-import { fetchUserTodo } from "../../../../../store/taskSlice";
+import { fetchUserTodo, deleteUserTodo } from "../../../../../store/taskSlice";
 import { Todo } from "../../../../../api";
 
 export const TodoList = ({ todos }: { todos: Todo[] }) => {
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   // const { todos } = useAppSelector((state) => state.todos);
   // console.log(todos);
 
   // useEffect(() => {
   //   dispatch(fetchUserTodo());
   // }, [dispatch]);
+
+  const handleDeleteTodo = (id: number) => {
+    dispatch(deleteUserTodo(id));
+  };
 
   const completedTodos = todos.filter((todo) => todo.status);
   console.log(completedTodos);
@@ -46,7 +50,11 @@ export const TodoList = ({ todos }: { todos: Todo[] }) => {
               <tbody>
                 {todos.map((todo) => {
                   return (
-                    <TodoItem key={todo.id.toString()} todo={todo}></TodoItem>
+                    <TodoItem
+                      key={todo.id.toString()}
+                      todo={todo}
+                      deleteTodo={handleDeleteTodo}
+                    ></TodoItem>
                   );
                 })}
               </tbody>
@@ -66,7 +74,11 @@ export const TodoList = ({ todos }: { todos: Todo[] }) => {
               <tbody>
                 {uncompletedTodos.map((todo) => {
                   return (
-                    <TodoItem key={todo.id.toString()} todo={todo}></TodoItem>
+                    <TodoItem
+                      key={todo.id.toString()}
+                      todo={todo}
+                      deleteTodo={handleDeleteTodo}
+                    ></TodoItem>
                   );
                 })}
               </tbody>

@@ -5,9 +5,10 @@ import { Todo } from "../../../../../../api";
 
 type Props = {
   todo: Todo;
+  deleteTodo: (id: number) => void;
 };
 
-export const TodoItem = React.memo(({ todo }: Props) => {
+export const TodoItem = React.memo(({ todo, deleteTodo }: Props) => {
   return (
     <>
       <tr>
@@ -16,11 +17,10 @@ export const TodoItem = React.memo(({ todo }: Props) => {
         </td>
         <td>{todo.title}</td>
         <td>{todo.description}</td>
-        {/* TODO:日付表示変更 */}
         <td>{todo.deadline.toString()}</td>
         <td>
           <IconButtonWrapper>
-            <IconButton>
+            <IconButton onClick={() => deleteTodo(todo.id)}>
               <TrashIcon></TrashIcon>
             </IconButton>
             <IconButton>

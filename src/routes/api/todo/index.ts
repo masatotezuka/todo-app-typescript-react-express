@@ -41,4 +41,15 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.delete("/", async (req, res, next) => {
+  try {
+    console.log(req.body.deleteTodoId);
+
+    todoRepository.delete(req.body.deleteTodoId);
+    return res.status(200).json(req.body.deleteTodoId);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 export default router;
