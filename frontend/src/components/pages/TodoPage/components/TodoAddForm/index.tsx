@@ -26,7 +26,6 @@ export const TodoAddForm = () => {
         title: data.title,
         description: data.description,
         deadline: data.deadline,
-        status: false,
       })
     );
     reset();

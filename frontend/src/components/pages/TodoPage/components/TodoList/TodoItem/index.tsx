@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
-import { Todo } from "../index";
+import { Todo } from "../../../../../../api";
 
 type Props = {
   todo: Todo;

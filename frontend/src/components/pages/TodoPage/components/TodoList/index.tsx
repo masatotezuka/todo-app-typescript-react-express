@@ -1,50 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Tabs, Tab, TabList, TabPanel } from "react-tabs";
 import { TodoItem } from "./TodoItem";
+import { useAppDispatch, useAppSelector } from "../../../../../hooks";
+import { fetchUserTodo } from "../../../../../store/taskSlice";
+import { Todo } from "../../../../../api";
 
-export type Todo = {
-  id: number;
-  title: string;
-  description: string;
-  deadline: Date;
-  status: boolean;
-};
+export const TodoList = ({ todos }: { todos: Todo[] }) => {
+  // const dispatch = useAppDispatch();
+  // const { todos } = useAppSelector((state) => state.todos);
+  // console.log(todos);
 
-export const TodoList: React.FC = () => {
-  const todos: Todo[] = [
-    {
-      id: 1,
-      title: "task1",
-      description: "test1",
-      deadline: new Date(),
-      status: true,
-    },
-    {
-      id: 3,
-      title: "task1",
-      description: "test1",
-      deadline: new Date(),
-      status: true,
-    },
-    {
-      id: 4,
-      title: "task1",
-      description: "test1",
-      deadline: new Date(),
-      status: true,
-    },
-    {
-      id: 2,
-      title: "task2",
-      description: "test2",
-      deadline: new Date(),
-      status: false,
-    },
-  ];
+  // useEffect(() => {
+  //   dispatch(fetchUserTodo());
+  // }, [dispatch]);
 
-  const completedTodos: Todo[] = todos.filter((todo) => todo.status);
-  const uncompletedTodos: Todo[] = todos.filter((todo) => !todo.status);
+  const completedTodos = todos.filter((todo) => todo.status);
+  console.log(completedTodos);
+  console.log(todos);
+
+  const uncompletedTodos = todos.filter((todo) => !todo.status);
   return (
     <>
       <TodoTableWrapper>
@@ -69,7 +44,7 @@ export const TodoList: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {completedTodos.map((todo) => {
+                {todos.map((todo) => {
                   return (
                     <TodoItem key={todo.id.toString()} todo={todo}></TodoItem>
                   );

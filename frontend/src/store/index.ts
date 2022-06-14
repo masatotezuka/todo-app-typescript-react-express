@@ -5,7 +5,7 @@ import todoReducer from "./taskSlice";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    todo: todoReducer,
+    todos: todoReducer,
   },
 });
 

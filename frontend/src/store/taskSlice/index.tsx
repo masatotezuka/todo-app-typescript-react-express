@@ -1,19 +1,26 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { createTodo, Todo } from "../../api";
+import { createTodo, fetchTodo, Todo } from "../../api";
 
 type InitialState = {
   todos: Todo[];
   status: "idle" | "pending" | "fulfilled" | "rejected";
 };
 
+const apiUrl = "http://localhost:8000/api/todo";
+
 export const createUserTodo = createAsyncThunk(
   "todo/createTodo",
-  async (data: Todo) => {
-    const response = await createTodo("http://localhost:8000/api/todo", data);
+  async (data: { title: string; description: string; deadline: Date }) => {
+    const response = await createTodo(apiUrl, data);
     console.log(response);
     return response.data;
   }
 );
+
+export const fetchUserTodo = createAsyncThunk("todo/fetchTodo", async () => {
+  const response = await fetchTodo(apiUrl);
+  return response.data;
+});
 
 const initialState: InitialState = {
   todos: [],
@@ -34,6 +41,11 @@ const todoSlice = createSlice({
         console.log(action.payload);
         state.todos.push(action.payload);
         console.log(state.todos);
+      })
+      .addCase(fetchUserTodo.fulfilled, (state, action) => {
+        state.status = "fulfilled";
+        console.log(action.payload);
+        state.todos = action.payload;
       });
   },
 });
