@@ -18,7 +18,6 @@ router.get("/", async (req, res, next) => {
         status: true,
       },
     });
-    console.log(todos);
     res.status(200).json(todos);
   } catch (error) {
     console.log(error);
@@ -32,7 +31,6 @@ router.post("/", async (req, res, next) => {
     todos.description = req.body.description;
     todos.deadline = req.body.deadline;
     todos.status = false;
-    console.log(todos);
 
     await todoRepository.save(todos);
     return res.status(200).json(todos);
@@ -43,10 +41,30 @@ router.post("/", async (req, res, next) => {
 
 router.delete("/", async (req, res, next) => {
   try {
-    console.log(req.body.deleteTodoId);
-
     todoRepository.delete(req.body.deleteTodoId);
-    return res.status(200).json(req.body.deleteTodoId);
+    return res.status(200).json(req.body.todoId);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.put("/", async (req, res, next) => {
+  try {
+    console.log(req.body.data.todoStatus);
+    await todoRepository.update(req.body.data.todoId, {
+      status: req.body.data.todoStatus,
+    });
+    const response = await todoRepository.find({
+      select: {
+        id: true,
+        status: true,
+      },
+      where: {
+        id: req.body.data.todoId,
+      },
+    });
+
+    return res.status(200).json(response);
   } catch (error) {
     console.log(error);
   }

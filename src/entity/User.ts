@@ -30,7 +30,7 @@ export class User {
 
   @Column({ nullable: true })
   verificationTokenExpiredAt: Date;
-
+  // TODO:Todoテーブルとリレーション
   // @OneToMany(() => Todo, (todo) => todo.user)
   // todos: Todo[];
 

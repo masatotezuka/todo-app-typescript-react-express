@@ -24,7 +24,7 @@ export class Todo {
 
   @Column({ nullable: false })
   status: boolean;
-
+  // TODO:Userテーブルとリレーション
   // @ManyToOne(() => User, (user) => user.todos)
   // user: User;
 

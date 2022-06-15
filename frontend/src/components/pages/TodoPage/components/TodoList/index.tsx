@@ -1,28 +1,33 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Tabs, Tab, TabList, TabPanel } from "react-tabs";
 import { TodoItem } from "./TodoItem";
 import { useAppDispatch, useAppSelector } from "../../../../../hooks";
-import { fetchUserTodo, deleteUserTodo } from "../../../../../store/taskSlice";
-import { Todo } from "../../../../../api";
+import {
+  fetchUserTodo,
+  deleteUserTodo,
+  changeUserTodoStatus,
+} from "../../../../../store/taskSlice";
 
-export const TodoList = ({ todos }: { todos: Todo[] }) => {
+export const TodoList = () => {
   const dispatch = useAppDispatch();
-  // const { todos } = useAppSelector((state) => state.todos);
-  // console.log(todos);
 
-  // useEffect(() => {
-  //   dispatch(fetchUserTodo());
-  // }, [dispatch]);
+  const { todos } = useAppSelector((state) => state.todos);
+
+  useEffect(() => {
+    dispatch(fetchUserTodo());
+  }, [dispatch]);
 
   const handleDeleteTodo = (id: number) => {
     dispatch(deleteUserTodo(id));
   };
 
-  const completedTodos = todos.filter((todo) => todo.status);
-  console.log(completedTodos);
-  console.log(todos);
+  const handleChangeTodoStatus = (id: number, status: boolean) => {
+    dispatch(changeUserTodoStatus({ id, status }));
+  };
 
+  //TODO:完了と未完了に振り分ける
+  const completedTodos = todos.filter((todo) => todo.status);
   const uncompletedTodos = todos.filter((todo) => !todo.status);
   return (
     <>
@@ -54,6 +59,7 @@ export const TodoList = ({ todos }: { todos: Todo[] }) => {
                       key={todo.id.toString()}
                       todo={todo}
                       deleteTodo={handleDeleteTodo}
+                      changeTodoStatus={handleChangeTodoStatus}
                     ></TodoItem>
                   );
                 })}
@@ -78,6 +84,7 @@ export const TodoList = ({ todos }: { todos: Todo[] }) => {
                       key={todo.id.toString()}
                       todo={todo}
                       deleteTodo={handleDeleteTodo}
+                      changeTodoStatus={handleChangeTodoStatus}
                     ></TodoItem>
                   );
                 })}

@@ -7,19 +7,12 @@ import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { fetchUserTodo } from "../../../store/taskSlice";
 
 export const TodoPage: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const { todos } = useAppSelector((state) => state.todos);
-
-  useEffect(() => {
-    dispatch(fetchUserTodo());
-  }, [dispatch]);
-
   return (
     <>
       <Wrapper>
         <Title>Todoアプリ</Title>
         <TodoAddForm></TodoAddForm>
-        <TodoList todos={todos}></TodoList>
+        <TodoList></TodoList>
         <LinkWrapper>
           <Link path="/" text="Topページに戻る"></Link>
         </LinkWrapper>

@@ -22,6 +22,17 @@ export const fetchTodo = async (apiUrl: string) => {
 };
 
 export const deleteTodo = async (apiUrl: string, id: number) => {
-  const res = await axios.delete(apiUrl, { data: { deleteTodoId: id } });
+  const res = await axios.delete(apiUrl, { data: { todoId: id } });
+  return res;
+};
+
+export const changeTodoStatus = async (
+  apiUrl: string,
+  id: number,
+  status: boolean
+) => {
+  const res = await axios.put(apiUrl, {
+    data: { todoId: id, todoStatus: status },
+  });
   return res;
 };

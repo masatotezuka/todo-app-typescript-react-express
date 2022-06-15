@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
 import { Todo } from "../../../../../../api";
@@ -6,69 +6,44 @@ import { Todo } from "../../../../../../api";
 type Props = {
   todo: Todo;
   deleteTodo: (id: number) => void;
+  changeTodoStatus: (id: number, status: boolean) => void;
 };
 
-export const TodoItem = React.memo(({ todo, deleteTodo }: Props) => {
-  return (
-    <>
-      <tr>
-        <td>
-          <CheckBox type="checkbox" name="todoStatus"></CheckBox>
-        </td>
-        <td>{todo.title}</td>
-        <td>{todo.description}</td>
-        <td>{todo.deadline.toString()}</td>
-        <td>
-          <IconButtonWrapper>
-            <IconButton onClick={() => deleteTodo(todo.id)}>
-              <TrashIcon></TrashIcon>
-            </IconButton>
-            <IconButton>
-              <EditIcon></EditIcon>
-            </IconButton>
-          </IconButtonWrapper>
-        </td>
-      </tr>
-    </>
-  );
-});
-
-const TodoTable = styled.table`
-  width: 100%;
-  height: 150px;
-  border-collapse: collapse;
-  text-align: center;
-  thead {
-    tr {
-      font-weight: bold;
-      height: 50px;
-      border: solid 1px;
-      border-left: none;
-      border-right: none;
-      border-top: none;
-      .status-header {
-        width: 100px;
-      }
-      .title-header {
-        width: 150px;
-      }
-      .description-header {
-        width: 400px;
-      }
-      .deadline-header {
-        width: 150px;
-      }
-      .edit-header {
-        width: 100px;
-      }
-    }
+export const TodoItem = React.memo(
+  ({ todo, deleteTodo, changeTodoStatus }: Props) => {
+    const [checked, setChecked] = useState<boolean>(todo.status);
+    return (
+      <>
+        <tr>
+          <td>
+            <CheckBox
+              type="checkbox"
+              name="todoStatus"
+              checked={checked}
+              onChange={() => {
+                setChecked(!checked);
+                changeTodoStatus(todo.id, !checked);
+              }}
+            ></CheckBox>
+          </td>
+          <td>{todo.title}</td>
+          <td>{todo.description}</td>
+          <td>{todo.deadline.toString()}</td>
+          <td>
+            <IconButtonWrapper>
+              <IconButton onClick={() => deleteTodo(todo.id)}>
+                <TrashIcon></TrashIcon>
+              </IconButton>
+              <IconButton>
+                <EditIcon></EditIcon>
+              </IconButton>
+            </IconButtonWrapper>
+          </td>
+        </tr>
+      </>
+    );
   }
-  tr {
-    border: solid 1px;
-    border-left: none;
-    border-right: none;
-  }
-`;
+);
 
 const CheckBox = styled.input`
   transform: scale(1.5);
