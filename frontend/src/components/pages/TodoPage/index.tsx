@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { TodoAddForm } from "./components/TodoAddForm";
 import { TodoList } from "./components/TodoList";
 import { Link } from "../../parts/Link";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { fetchUserTodo } from "../../../store/taskSlice";
 
 export const TodoPage: React.FC = () => {
   return (

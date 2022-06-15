@@ -29,6 +29,10 @@ export const TodoList = () => {
   //TODO:完了と未完了に振り分ける
   const completedTodos = todos.filter((todo) => todo.status);
   const uncompletedTodos = todos.filter((todo) => !todo.status);
+  console.log(completedTodos);
+  console.log(uncompletedTodos);
+  const [tabIndex, setTabIndex] = useState(0);
+
   return (
     <>
       <TodoTableWrapper>
@@ -53,7 +57,7 @@ export const TodoList = () => {
                 </tr>
               </thead>
               <tbody>
-                {todos.map((todo) => {
+                {completedTodos.map((todo) => {
                   return (
                     <TodoItem
                       key={todo.id.toString()}

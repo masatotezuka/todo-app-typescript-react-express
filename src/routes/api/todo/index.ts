@@ -41,7 +41,7 @@ router.post("/", async (req, res, next) => {
 
 router.delete("/", async (req, res, next) => {
   try {
-    todoRepository.delete(req.body.deleteTodoId);
+    todoRepository.delete(req.body.todoId);
     return res.status(200).json(req.body.todoId);
   } catch (error) {
     console.log(error);
