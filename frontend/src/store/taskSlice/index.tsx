@@ -81,11 +81,7 @@ const todoSlice = createSlice({
         const index = state.todos.findIndex(
           (todo) => todo.id === action.payload[0].id
         );
-        console.log(index);
-
-        console.log(action.payload);
         state.todos[index].status = action.payload.status;
-        console.log(state.todos[0]);
       });
   },
 });

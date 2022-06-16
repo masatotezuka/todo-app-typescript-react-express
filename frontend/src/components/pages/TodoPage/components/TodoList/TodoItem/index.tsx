@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
 import { Todo } from "../../../../../../api";
@@ -12,18 +12,20 @@ type Props = {
 export const TodoItem = React.memo(
   ({ todo, deleteTodo, changeTodoStatus }: Props) => {
     const [checked, setChecked] = useState<boolean>(todo.status);
+    const updateStatus = useCallback(() => {
+      setChecked(() => !checked);
+      changeTodoStatus(todo.id, !checked);
+    }, [checked, changeTodoStatus, todo.id]);
     return (
       <>
         <tr>
           <td>
             <CheckBox
+              id={todo.id.toString()}
               type="checkbox"
               name="todoStatus"
               checked={checked}
-              onChange={() => {
-                setChecked(!checked);
-                changeTodoStatus(todo.id, !checked);
-              }}
+              onChange={updateStatus}
             ></CheckBox>
           </td>
           <td>{todo.title}</td>

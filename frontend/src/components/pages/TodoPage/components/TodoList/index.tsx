@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Tabs, Tab, TabList, TabPanel } from "react-tabs";
 import { TodoItem } from "./TodoItem";
@@ -18,13 +18,19 @@ export const TodoList = () => {
     dispatch(fetchUserTodo());
   }, [dispatch]);
 
-  const handleDeleteTodo = (id: number) => {
-    dispatch(deleteUserTodo(id));
-  };
+  const handleDeleteTodo = useCallback(
+    (id: number) => {
+      dispatch(deleteUserTodo(id));
+    },
+    [dispatch]
+  );
 
-  const handleChangeTodoStatus = (id: number, status: boolean) => {
-    dispatch(changeUserTodoStatus({ id, status }));
-  };
+  const handleChangeTodoStatus = useCallback(
+    (id: number, status: boolean) => {
+      dispatch(changeUserTodoStatus({ id, status }));
+    },
+    [dispatch]
+  );
 
   //TODO:完了と未完了に振り分ける
   const completedTodos = todos.filter((todo) => todo.status);
@@ -36,7 +42,10 @@ export const TodoList = () => {
   return (
     <>
       <TodoTableWrapper>
-        <StyledTabs>
+        <StyledTabs
+          selectedIndex={tabIndex}
+          onSelect={(index: number) => setTabIndex(index)}
+        >
           <TabList className="tab-lists">
             <Tab className="tab" selectedClassName="active">
               完了リスト
