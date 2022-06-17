@@ -4,6 +4,7 @@ import {
   fetchTodo,
   deleteTodo,
   changeTodoStatus,
+  updateTodo,
   Todo,
 } from "../../api";
 
@@ -31,8 +32,6 @@ export const deleteUserTodo = createAsyncThunk(
   "todo/deleteTodo",
   async (id: number) => {
     const response = await deleteTodo(apiUrl, id);
-    console.log(id);
-
     return response.data;
   }
 );
@@ -40,7 +39,21 @@ export const deleteUserTodo = createAsyncThunk(
 export const changeUserTodoStatus = createAsyncThunk(
   "todo/changeTodoStatus",
   async ({ id, status }: { id: number; status: boolean }) => {
-    const response = await changeTodoStatus(apiUrl, id, status);
+    const response = await changeTodoStatus(
+      `${apiUrl}/changeStatus`,
+      id,
+      status
+    );
+    return response.data;
+  }
+);
+
+export const updateUserTodo = createAsyncThunk(
+  "todo/updateTodo",
+  async (todo: Todo) => {
+    const response = await updateTodo(`${apiUrl}/updateTodo`, todo);
+    console.log(response.data);
+
     return response.data;
   }
 );
@@ -61,12 +74,10 @@ const todoSlice = createSlice({
       })
       .addCase(createUserTodo.fulfilled, (state, action) => {
         state.status = "fulfilled";
-
         state.todos.push(action.payload);
       })
       .addCase(fetchUserTodo.fulfilled, (state, action) => {
         state.status = "fulfilled";
-        console.log(action.payload);
         state.todos = action.payload;
       })
       .addCase(deleteUserTodo.fulfilled, (state, action) => {
@@ -81,7 +92,23 @@ const todoSlice = createSlice({
         const index = state.todos.findIndex(
           (todo) => todo.id === action.payload[0].id
         );
-        state.todos[index].status = action.payload.status;
+        state.todos[index].status = action.payload[0].status;
+        return state;
+      })
+      .addCase(updateUserTodo.fulfilled, (state, action) => {
+        const updatedTodo: Todo = action.payload[0];
+        state.status = "fulfilled";
+        const index = state.todos.findIndex(
+          (todo) => todo.id === updatedTodo.id
+        );
+
+        state.todos[index] = {
+          ...state.todos[index],
+          id: updatedTodo.id,
+          title: updatedTodo.title,
+          description: updatedTodo.description,
+          deadline: updatedTodo.deadline,
+        };
       });
   },
 });

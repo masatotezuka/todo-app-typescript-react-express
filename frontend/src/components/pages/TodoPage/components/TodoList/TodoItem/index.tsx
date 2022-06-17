@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
 import { Todo } from "../../../../../../api";
+import { Modal } from "../Modal";
 
 type Props = {
   todo: Todo;
@@ -12,10 +13,20 @@ type Props = {
 export const TodoItem = React.memo(
   ({ todo, deleteTodo, changeTodoStatus }: Props) => {
     const [checked, setChecked] = useState<boolean>(todo.status);
+    const [showModal, setShowModal] = useState<boolean>(false);
+
     const updateStatus = useCallback(() => {
       setChecked(() => !checked);
       changeTodoStatus(todo.id, !checked);
     }, [checked, changeTodoStatus, todo.id]);
+
+    const openModal = useCallback(() => {
+      setShowModal(true);
+    }, []);
+    const closeModal = useCallback(() => {
+      setShowModal(false);
+    }, []);
+
     return (
       <>
         <tr>
@@ -36,10 +47,17 @@ export const TodoItem = React.memo(
               <IconButton onClick={() => deleteTodo(todo.id)}>
                 <TrashIcon></TrashIcon>
               </IconButton>
-              <IconButton>
+              <IconButton onClick={openModal}>
                 <EditIcon></EditIcon>
               </IconButton>
             </IconButtonWrapper>
+          </td>
+          <td>
+            <Modal
+              todo={todo}
+              showModal={showModal}
+              closeModal={closeModal}
+            ></Modal>
           </td>
         </tr>
       </>

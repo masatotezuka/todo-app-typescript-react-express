@@ -48,9 +48,8 @@ router.delete("/", async (req, res, next) => {
   }
 });
 
-router.put("/", async (req, res, next) => {
+router.put("/changeStatus", async (req, res, next) => {
   try {
-    console.log(req.body.data.todoStatus);
     await todoRepository.update(req.body.data.todoId, {
       status: req.body.data.todoStatus,
     });
@@ -61,6 +60,32 @@ router.put("/", async (req, res, next) => {
       },
       where: {
         id: req.body.data.todoId,
+      },
+    });
+
+    return res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.put("/updateTodo", async (req, res, next) => {
+  try {
+    await todoRepository.update(req.body.data.id, {
+      title: req.body.data.title,
+      description: req.body.data.description,
+      deadline: req.body.data.deadline,
+    });
+    const response = await todoRepository.find({
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        deadline: true,
+        status: true,
+      },
+      where: {
+        id: req.body.data.id,
       },
     });
 

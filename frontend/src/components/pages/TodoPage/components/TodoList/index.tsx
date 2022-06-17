@@ -32,28 +32,21 @@ export const TodoList = () => {
     [dispatch]
   );
 
-  //TODO:完了と未完了に振り分ける
   const completedTodos = todos.filter((todo) => todo.status);
   const uncompletedTodos = todos.filter((todo) => !todo.status);
-  console.log(completedTodos);
-  console.log(uncompletedTodos);
-  const [tabIndex, setTabIndex] = useState(0);
-
   return (
     <>
       <TodoTableWrapper>
-        <StyledTabs
-          selectedIndex={tabIndex}
-          onSelect={(index: number) => setTabIndex(index)}
-        >
+        <StyledTabs>
           <TabList className="tab-lists">
-            <Tab className="tab" selectedClassName="active">
-              完了リスト
-            </Tab>
             <Tab className="tab" selectedClassName="active">
               未完了リスト
             </Tab>
+            <Tab className="tab" selectedClassName="active">
+              完了リスト
+            </Tab>
           </TabList>
+
           <TabPanel>
             <TodoTable>
               <thead>
@@ -66,7 +59,7 @@ export const TodoList = () => {
                 </tr>
               </thead>
               <tbody>
-                {completedTodos.map((todo) => {
+                {uncompletedTodos.map((todo) => {
                   return (
                     <TodoItem
                       key={todo.id.toString()}
@@ -91,7 +84,7 @@ export const TodoList = () => {
                 </tr>
               </thead>
               <tbody>
-                {uncompletedTodos.map((todo) => {
+                {completedTodos.map((todo) => {
                   return (
                     <TodoItem
                       key={todo.id.toString()}

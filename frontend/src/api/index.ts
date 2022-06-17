@@ -36,3 +36,8 @@ export const changeTodoStatus = async (
   });
   return res;
 };
+
+export const updateTodo = async (apiUrl: string, data: Todo) => {
+  const res = await axios.put(apiUrl, { data: data });
+  return res;
+};
