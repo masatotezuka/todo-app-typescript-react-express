@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { TodoAddForm } from "./components/TodoAddForm";
 import { TodoList } from "./components/TodoList";
 import { Link } from "../../parts/Link";
+import { Route, Routes } from "react-router-dom";
+import { ArchivedList } from "./components/ArchivedList";
 
 export const TodoPage: React.FC = () => {
   return (
@@ -10,9 +12,24 @@ export const TodoPage: React.FC = () => {
       <Wrapper>
         <Title>Todoアプリ</Title>
         <TodoAddForm></TodoAddForm>
-        <TodoList></TodoList>
+        <Routes>
+          <Route path="active" element={<TodoList />}></Route>
+          <Route path="archived" element={<ArchivedList />}></Route>
+        </Routes>
         <LinkWrapper>
           <Link path="/" text="Topページに戻る"></Link>
+          <Routes>
+            <Route
+              path="archived"
+              element={<Link path="/todo/active" text="Todoリストへ"></Link>}
+            ></Route>
+            <Route
+              path="active"
+              element={
+                <Link path="/todo/archived" text="アーカイブリストへ"></Link>
+              }
+            ></Route>
+          </Routes>
         </LinkWrapper>
       </Wrapper>
     </>
@@ -26,7 +43,10 @@ const Title = styled.p`
 `;
 
 const LinkWrapper = styled.div`
-  margin-top: 20px;
+  width: 35%;
+  margin: 20px auto 0px auto;
+  display: flex;
+  justify-content: space-around;
 `;
 
 const Wrapper = styled.div`

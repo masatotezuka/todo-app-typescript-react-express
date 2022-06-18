@@ -24,9 +24,15 @@ export class Todo {
 
   @Column({ nullable: false })
   status: boolean;
+
   // TODO:Userテーブルとリレーション
   // @ManyToOne(() => User, (user) => user.todos)
   // user: User;
+  @Column("timestamptz", { default: null })
+  completedAt: Date | null = null;
+
+  @Column("timestamptz", { default: null })
+  archivedAt: Date | null = null;
 
   @CreateDateColumn()
   createdAt: Date;

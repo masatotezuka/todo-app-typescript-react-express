@@ -1,11 +1,18 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+} from "@reduxjs/toolkit";
+import { RootState } from "..";
 import {
   createTodo,
   fetchTodo,
   deleteTodo,
   changeTodoStatus,
   updateTodo,
+  toggleArchiveTodo,
   Todo,
+  activeTodo,
 } from "../../api";
 
 type InitialState = {
@@ -52,11 +59,29 @@ export const updateUserTodo = createAsyncThunk(
   "todo/updateTodo",
   async (todo: Todo) => {
     const response = await updateTodo(`${apiUrl}/updateTodo`, todo);
-    console.log(response.data);
-
     return response.data;
   }
 );
+
+export const toggleArchiveUserTodo = createAsyncThunk(
+  "todo/archiveTodo",
+  async ({ id, archivedAt }: { id: number; archivedAt: Date | null }) => {
+    const response = await toggleArchiveTodo(
+      `${apiUrl}/toggleArchiveTodo`,
+      id,
+      archivedAt
+    );
+    return response.data;
+  }
+);
+
+// export const activeUserTodo = createAsyncThunk(
+//   "todo/activeTodo",
+//   async (id: number) => {
+//     const response = await activeTodo(`${apiUrl}/activeTodo`, id);
+//     return response.data;
+//   }
+// );
 
 const initialState: InitialState = {
   todos: [],
@@ -93,7 +118,6 @@ const todoSlice = createSlice({
           (todo) => todo.id === action.payload[0].id
         );
         state.todos[index].status = action.payload[0].status;
-        return state;
       })
       .addCase(updateUserTodo.fulfilled, (state, action) => {
         const updatedTodo: Todo = action.payload[0];
@@ -109,8 +133,23 @@ const todoSlice = createSlice({
           description: updatedTodo.description,
           deadline: updatedTodo.deadline,
         };
+      })
+      .addCase(toggleArchiveUserTodo.fulfilled, (state, action) => {
+        const index = state.todos.findIndex(
+          (todo) => todo.id === action.payload[0].id
+        );
+        state.todos[index] = {
+          ...state.todos[index],
+          id: action.payload[0].id,
+          archivedAt: action.payload[0].archivedAt,
+        };
       });
   },
 });
+const todoSelector = (state: RootState) => state.todos.todos;
+
+export const archivedTodoSelector = createSelector(todoSelector, (todos) =>
+  todos.filter((todo) => todo.archivedAt)
+);
 
 export default todoSlice.reducer;

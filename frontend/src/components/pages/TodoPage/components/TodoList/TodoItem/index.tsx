@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
+import { MdArchive } from "react-icons/md";
 import { Todo } from "../../../../../../api";
 import { Modal } from "../Modal";
 
@@ -8,16 +9,18 @@ type Props = {
   todo: Todo;
   deleteTodo: (id: number) => void;
   changeTodoStatus: (id: number, status: boolean) => void;
+  archiveTodo: (id: number, archivedAt: Date | null) => void;
 };
 
 export const TodoItem = React.memo(
-  ({ todo, deleteTodo, changeTodoStatus }: Props) => {
+  ({ todo, deleteTodo, changeTodoStatus, archiveTodo }: Props) => {
     const [checked, setChecked] = useState<boolean>(todo.status);
     const [showModal, setShowModal] = useState<boolean>(false);
 
     const updateStatus = useCallback(() => {
       setChecked(() => !checked);
-      changeTodoStatus(todo.id, !checked);
+      changeTodoStatus(todo.id, !todo.status);
+      return;
     }, [checked, changeTodoStatus, todo.id]);
 
     const openModal = useCallback(() => {
@@ -49,6 +52,9 @@ export const TodoItem = React.memo(
               </IconButton>
               <IconButton onClick={openModal}>
                 <EditIcon></EditIcon>
+              </IconButton>
+              <IconButton onClick={() => archiveTodo(todo.id, todo.archivedAt)}>
+                <ArchiveIcon></ArchiveIcon>
               </IconButton>
             </IconButtonWrapper>
           </td>
@@ -99,6 +105,17 @@ const TrashIcon = styled(BsFillTrashFill)`
 `;
 
 const EditIcon = styled(BsFillPencilFill)`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 20px;
+  height: 20px;
+`;
+
+const ArchiveIcon = styled(MdArchive)`
   position: absolute;
   top: 0;
   bottom: 0;

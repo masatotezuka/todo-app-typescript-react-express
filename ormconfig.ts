@@ -9,7 +9,7 @@ export const AppDataSource = new DataSource({
   password: undefined,
   database: "todo_app_development",
   synchronize: false,
-  // logging: false,
+  logging: false,
   entities: ["./src/entity/*.ts"],
   migrations: ["./src/migration/*.ts"],
   subscribers: [],

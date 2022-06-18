@@ -6,6 +6,12 @@ export type Todo = {
   description: string;
   deadline: Date;
   status: boolean;
+  archivedAt: Date | null;
+};
+
+export const fetchTodo = async (apiUrl: string) => {
+  const res = await axios.get(apiUrl);
+  return res;
 };
 
 export const createTodo = async (
@@ -16,13 +22,8 @@ export const createTodo = async (
   return res;
 };
 
-export const fetchTodo = async (apiUrl: string) => {
-  const res = await axios.get(apiUrl);
-  return res;
-};
-
 export const deleteTodo = async (apiUrl: string, id: number) => {
-  const res = await axios.delete(apiUrl, { data: { todoId: id } });
+  const res = await axios.delete(apiUrl, { data: { id: id } });
   return res;
 };
 
@@ -32,12 +33,28 @@ export const changeTodoStatus = async (
   status: boolean
 ) => {
   const res = await axios.put(apiUrl, {
-    data: { todoId: id, todoStatus: status },
+    data: { id: id, status: status },
   });
   return res;
 };
 
 export const updateTodo = async (apiUrl: string, data: Todo) => {
   const res = await axios.put(apiUrl, { data: data });
+  return res;
+};
+
+export const toggleArchiveTodo = async (
+  apiUrl: string,
+  id: number,
+  archivedAt: Date | null
+) => {
+  const res = await axios.put(apiUrl, {
+    data: { id: id, archivedAt: archivedAt },
+  });
+  return res;
+};
+
+export const activeTodo = async (apiUrl: string, id: number) => {
+  const res = await axios.put(apiUrl, { data: { id: id } });
   return res;
 };

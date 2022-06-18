@@ -7,6 +7,7 @@ import {
   fetchUserTodo,
   deleteUserTodo,
   changeUserTodoStatus,
+  toggleArchiveUserTodo,
 } from "../../../../../store/taskSlice";
 
 export const TodoList = () => {
@@ -32,8 +33,21 @@ export const TodoList = () => {
     [dispatch]
   );
 
-  const completedTodos = todos.filter((todo) => todo.status);
-  const uncompletedTodos = todos.filter((todo) => !todo.status);
+  const handleArchiveTodo = useCallback(
+    (id: number, archivedAt: Date | null) => {
+      dispatch(toggleArchiveUserTodo({ id, archivedAt }));
+    },
+    [dispatch]
+  );
+
+  const completedTodos = todos.filter(
+    (todo) => todo.status && !todo.archivedAt
+  );
+  const uncompletedTodos = todos.filter(
+    (todo) => !todo.status && !todo.archivedAt
+  );
+  console.log(uncompletedTodos);
+
   return (
     <>
       <TodoTableWrapper>
@@ -66,6 +80,7 @@ export const TodoList = () => {
                       todo={todo}
                       deleteTodo={handleDeleteTodo}
                       changeTodoStatus={handleChangeTodoStatus}
+                      archiveTodo={handleArchiveTodo}
                     ></TodoItem>
                   );
                 })}
@@ -91,6 +106,7 @@ export const TodoList = () => {
                       todo={todo}
                       deleteTodo={handleDeleteTodo}
                       changeTodoStatus={handleChangeTodoStatus}
+                      archiveTodo={handleArchiveTodo}
                     ></TodoItem>
                   );
                 })}

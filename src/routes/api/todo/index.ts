@@ -16,6 +16,7 @@ router.get("/", async (req, res, next) => {
         description: true,
         deadline: true,
         status: true,
+        archivedAt: true,
       },
     });
     res.status(200).json(todos);
@@ -41,8 +42,8 @@ router.post("/", async (req, res, next) => {
 
 router.delete("/", async (req, res, next) => {
   try {
-    todoRepository.delete(req.body.todoId);
-    return res.status(200).json(req.body.todoId);
+    todoRepository.delete(req.body.id);
+    return res.status(200).json(req.body.id);
   } catch (error) {
     console.log(error);
   }
@@ -50,18 +51,32 @@ router.delete("/", async (req, res, next) => {
 
 router.put("/changeStatus", async (req, res, next) => {
   try {
-    await todoRepository.update(req.body.data.todoId, {
-      status: req.body.data.todoStatus,
+    const { data } = req.body;
+
+    await todoRepository.update(data.id, {
+      status: data.status,
     });
+
+    const todo = new Todo();
+    todo.id = data.id;
+    if (data.status) {
+      todo.completedAt = new Date();
+    } else {
+      todo.completedAt = null;
+    }
+    await todoRepository.save(todo);
+
     const response = await todoRepository.find({
       select: {
         id: true,
         status: true,
+        completedAt: true,
       },
       where: {
-        id: req.body.data.todoId,
+        id: data.id,
       },
     });
+    console.log(response);
 
     return res.status(200).json(response);
   } catch (error) {
@@ -88,6 +103,40 @@ router.put("/updateTodo", async (req, res, next) => {
         id: req.body.data.id,
       },
     });
+
+    return res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.put("/toggleArchiveTodo", async (req, res, next) => {
+  try {
+    const { data } = req.body;
+    const todo = new Todo();
+
+    if (data.archivedAt) {
+      todo.id = data.id;
+      todo.archivedAt = null;
+      await todoRepository.save(todo);
+    } else {
+      todo.id = data.id;
+      todo.archivedAt = new Date();
+      await todoRepository.save(todo);
+    }
+    console.log(data);
+
+    const response = await todoRepository.find({
+      select: {
+        id: true,
+        archivedAt: true,
+      },
+      where: {
+        id: req.body.data.id,
+      },
+    });
+
+    console.log(response);
 
     return res.status(200).json(response);
   } catch (error) {

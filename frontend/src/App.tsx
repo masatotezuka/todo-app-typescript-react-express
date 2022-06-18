@@ -27,16 +27,25 @@ const App: React.FC = () => {
           <Route path="/login" element={<LoginPage />} />
           {/* リセットページ */}
           <Route path="/reset-password" element={<ResetPasswordPage />} />
-          <Route path="/reset-password" element={<NotFoundPage />} />
           <Route
-            path="/todo"
+            path="/todo/*"
             element={
               <PrivateRoute
                 isLoggedIn={true}
                 children={<TodoPage />}
               ></PrivateRoute>
             }
-          />
+          >
+            <Route
+              path="archived"
+              element={
+                <PrivateRoute
+                  isLoggedIn={true}
+                  children={<TodoPage />}
+                ></PrivateRoute>
+              }
+            />
+          </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Wrapper>
