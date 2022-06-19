@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
-import { User, signUp } from "../../api";
+import { User, signUp, login } from "../../api";
 
 type InitialState = {
   user: User;
@@ -20,33 +20,36 @@ export const signUpUser = createAsyncThunk(
   "auth/signUp",
   async (data: User) => {
     const response = await signUp(`${apiUrl}/sign-up`, data);
-    console.log(response);
-
     return response.data;
   }
 );
 
+export const loginUser = createAsyncThunk("auth/login", async (data: User) => {
+  const response = await login(`${apiUrl}/login`, data);
+  console.log(data);
+
+  return response.data;
+});
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    // login: (state) => {
-    //   state.isLoggedIn = true;
-    // },
-    // logout: (state) => {
-    //   state.isLoggedIn = false;
-    // },
-  },
+  reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(signUpUser.fulfilled, (state, action) => {
-      state.status = "fulfilled";
-      state.isLoggedIn = true;
+    builder
+      .addCase(signUpUser.fulfilled, (state, action) => {
+        state.status = "fulfilled";
+        state.isLoggedIn = true;
+        state.user = action.payload[0];
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.status = "fulfilled";
+        state.isLoggedIn = true;
+        console.log(action.payload);
 
-      return;
-    });
+        state.user = action.payload;
+      });
   },
 });
-
-// export const { login, logout } = authSlice.actions;
 
 export default authSlice.reducer;

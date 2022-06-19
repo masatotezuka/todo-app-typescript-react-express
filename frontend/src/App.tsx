@@ -8,9 +8,7 @@ import { NotFoundPage } from "./components/pages/NotFoundPage";
 import { ResetPasswordPage } from "./components/pages/UserPage";
 import { PrivateRoute } from "./PrivateRouter";
 import { useAppSelector } from "./hooks";
-import axios from "axios";
 import styled from "styled-components";
-axios.defaults.withCredentials = true;
 
 const Wrapper = styled.div`
   max-width: 1440px;
@@ -18,6 +16,7 @@ const Wrapper = styled.div`
 `;
 const App: React.FC = () => {
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+  console.log(isLoggedIn);
   console.log(isLoggedIn);
 
   return (

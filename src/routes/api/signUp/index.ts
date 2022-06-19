@@ -16,6 +16,7 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
     const user = await userRepository.findOne({
       where: { email: req.body.email },
     });
+
     if (user) {
       throw new UserError(400, "USERS_ALREADY_EXISTS_USER");
     }
@@ -42,6 +43,7 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
       },
       where: { email: req.body.email },
     });
+    console.log(result);
 
     const jwtToken = jwtHelper.createToken({ userId: result[0].id });
     return res

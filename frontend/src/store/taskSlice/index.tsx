@@ -98,8 +98,6 @@ const todoSlice = createSlice({
       })
       .addCase(createUserTodo.fulfilled, (state, action) => {
         state.status = "fulfilled";
-        console.log(action.payload);
-
         state.todos.push(action.payload);
       })
       .addCase(fetchUserTodo.fulfilled, (state, action) => {

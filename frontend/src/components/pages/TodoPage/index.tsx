@@ -5,12 +5,14 @@ import { TodoList } from "./components/TodoList";
 import { Link } from "../../parts/Link";
 import { Route, Routes } from "react-router-dom";
 import { ArchivedList } from "./components/ArchivedList";
+import { useAppSelector } from "../../../hooks";
 
 export const TodoPage: React.FC = () => {
+  const user = useAppSelector((state) => state.auth.user);
   return (
     <>
       <Wrapper>
-        <Title>Todoアプリ</Title>
+        <Title>{user.lastName}さんのTodoリスト</Title>
         <TodoAddForm></TodoAddForm>
         <Routes>
           <Route path="active" element={<TodoList />}></Route>

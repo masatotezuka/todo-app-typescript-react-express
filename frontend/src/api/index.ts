@@ -66,3 +66,8 @@ export const signUp = async (apiUrl: string, data: User) => {
   const res = await axios.post(apiUrl, data);
   return res;
 };
+
+export const login = async (apiUrl: string, data: User) => {
+  const res = await axios.post(apiUrl, data);
+  return res;
+};

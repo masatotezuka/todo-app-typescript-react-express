@@ -3,6 +3,9 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { InputText } from "../../../../parts/InputText";
 import styled from "styled-components";
 import { Button } from "../../../../parts/Button/Button";
+import { useAppDispatch } from "../../../../../hooks";
+import { loginUser } from "../../../../../store/authSlice";
+import { useNavigate } from "react-router-dom";
 
 type LoginInputs = {
   email: string;
@@ -10,13 +13,16 @@ type LoginInputs = {
 };
 
 export const LoginForm = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginInputs>();
   const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
-    console.log(data);
+    await dispatch(loginUser(data));
+    navigate("/todo/active", { replace: true });
   };
   return (
     <>
