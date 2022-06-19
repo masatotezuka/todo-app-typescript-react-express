@@ -4,6 +4,8 @@ import { AppDataSource } from "../../../../ormconfig";
 import { User } from "../../../entity/User";
 import { UserError } from "../../../helper/errorHandleHelper";
 import * as bcrypt from "bcrypt";
+import { jwtHelper } from "../../../helper/jwtHelper";
+import ms = require("ms");
 
 const router = express.Router();
 const userRepository = AppDataSource.getRepository(User);
@@ -25,12 +27,19 @@ router.post("/", async (req, res, next) => {
     const match = await bcrypt.compare(user.password, result.password);
     if (match) {
       console.log(result);
-
-      res.status(200).json({
-        id: result.id,
-        firstName: result.firstName,
-        lastName: result.lastName,
-      });
+      const jwtToken = jwtHelper.createToken({ userId: result.id });
+      res
+        .status(200)
+        .cookie("jwtToken", jwtToken, {
+          httpOnly: true,
+          expires: new Date(Date.now() + ms("2d")),
+        })
+        .json({
+          id: result.id,
+          firstName: result.firstName,
+          lastName: result.lastName,
+        });
+    } else {
     }
   } catch (error) {
     console.log(error);

@@ -9,6 +9,8 @@ const router = express.Router();
 router.use("/sign-up", signUp);
 router.use("/login", login);
 
+//TODO:tokenチェック
+//TODO:token作成
 router.use("/todo", todo);
 
 export default router;
