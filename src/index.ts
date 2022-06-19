@@ -7,6 +7,8 @@ import * as cors from "cors";
 import { expressjwt, Request as JWTRequest } from "express-jwt";
 import * as jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
+import * as cookieParser from "cookie-parser";
+
 dotenv.config();
 
 const app = express();
@@ -18,6 +20,7 @@ const corsOptions: cors.CorsOptions = {
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 
 AppDataSource.initialize()
   .then(() => {

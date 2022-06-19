@@ -4,7 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../../hooks";
-import { login } from "../../../../store/authSlice";
+import { signUpUser } from "../../../../store/authSlice";
 import { InputText } from "../../../parts/InputText";
 import { Button } from "../../../parts/Button/Button";
 
@@ -25,16 +25,8 @@ export const SingUpForm: React.FC = () => {
   } = useForm<SignUpInputs>();
   const onSubmit: SubmitHandler<SignUpInputs> = async (data) => {
     console.log(data);
-    const response = await axios.post(
-      "http://localhost:8000/api/sign-up",
-      data
-    );
-    // if (response.data.authorization) {
-    console.log(response.data);
-    dispatch(login());
-    navigate("/todo", { replace: true });
-    // } else {
-    // }
+    await dispatch(signUpUser(data));
+    navigate("/todo/active", { replace: true });
   };
   return (
     <>

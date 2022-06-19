@@ -1,5 +1,5 @@
 import axios from "axios";
-
+axios.defaults.withCredentials = true;
 export type Todo = {
   id: number;
   title: string;
@@ -7,6 +7,14 @@ export type Todo = {
   deadline: Date;
   status: boolean;
   archivedAt: Date | null;
+};
+
+export type User = {
+  id?: number;
+  firstName?: string;
+  lastName?: string;
+  email: string;
+  password?: string;
 };
 
 export const fetchTodo = async (apiUrl: string) => {
@@ -54,7 +62,7 @@ export const toggleArchiveTodo = async (
   return res;
 };
 
-export const activeTodo = async (apiUrl: string, id: number) => {
-  const res = await axios.put(apiUrl, { data: { id: id } });
+export const signUp = async (apiUrl: string, data: User) => {
+  const res = await axios.post(apiUrl, data);
   return res;
 };

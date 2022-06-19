@@ -17,7 +17,9 @@ const Wrapper = styled.div`
   margin: 0px auto;
 `;
 const App: React.FC = () => {
-  const userLogin = useAppSelector((state) => state.auth.isLoggedIn);
+  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+  console.log(isLoggedIn);
+
   return (
     <>
       <Wrapper>
@@ -31,7 +33,7 @@ const App: React.FC = () => {
             path="/todo/*"
             element={
               <PrivateRoute
-                isLoggedIn={true}
+                isLoggedIn={isLoggedIn}
                 children={<TodoPage />}
               ></PrivateRoute>
             }
@@ -40,7 +42,7 @@ const App: React.FC = () => {
               path="archived"
               element={
                 <PrivateRoute
-                  isLoggedIn={true}
+                  isLoggedIn={isLoggedIn}
                   children={<TodoPage />}
                 ></PrivateRoute>
               }

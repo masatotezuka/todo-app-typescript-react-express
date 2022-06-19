@@ -9,6 +9,8 @@ const todoRepository = AppDataSource.getRepository(Todo);
 
 router.get("/", async (req, res, next) => {
   try {
+    console.log(req.cookies.jwtToken);
+
     const todos = await todoRepository.find({
       select: {
         id: true,
@@ -21,7 +23,9 @@ router.get("/", async (req, res, next) => {
     });
     res.status(200).json(todos);
   } catch (error) {
-    console.log(error);
+    if (error instanceof Error) {
+      res.json({ message: error.message });
+    }
   }
 });
 

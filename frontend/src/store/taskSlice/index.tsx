@@ -12,7 +12,6 @@ import {
   updateTodo,
   toggleArchiveTodo,
   Todo,
-  activeTodo,
 } from "../../api";
 
 type InitialState = {
@@ -99,6 +98,8 @@ const todoSlice = createSlice({
       })
       .addCase(createUserTodo.fulfilled, (state, action) => {
         state.status = "fulfilled";
+        console.log(action.payload);
+
         state.todos.push(action.payload);
       })
       .addCase(fetchUserTodo.fulfilled, (state, action) => {
@@ -135,6 +136,7 @@ const todoSlice = createSlice({
         };
       })
       .addCase(toggleArchiveUserTodo.fulfilled, (state, action) => {
+        state.status = "fulfilled";
         const index = state.todos.findIndex(
           (todo) => todo.id === action.payload[0].id
         );
