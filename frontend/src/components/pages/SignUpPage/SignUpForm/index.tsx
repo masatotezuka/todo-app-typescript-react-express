@@ -24,7 +24,6 @@ export const SingUpForm: React.FC = () => {
     formState: { errors },
   } = useForm<SignUpInputs>();
   const onSubmit: SubmitHandler<SignUpInputs> = async (data) => {
-    console.log(data);
     await dispatch(signUpUser(data));
     navigate("/todo/active", { replace: true });
   };
