@@ -17,7 +17,7 @@ router.get("/", async (req, res, next) => {
         title: true,
         description: true,
         deadline: true,
-        status: true,
+        completedAt: true,
         archivedAt: true,
       },
     });
@@ -35,8 +35,7 @@ router.post("/", async (req, res, next) => {
     todos.title = req.body.title;
     todos.description = req.body.description;
     todos.deadline = req.body.deadline;
-    todos.status = false;
-
+    todos.completedAt = null;
     await todoRepository.save(todos);
     return res.status(200).json(todos);
   } catch (error) {
@@ -57,30 +56,24 @@ router.put("/changeStatus", async (req, res, next) => {
   try {
     const { data } = req.body;
 
-    await todoRepository.update(data.id, {
-      status: data.status,
-    });
-
     const todo = new Todo();
     todo.id = data.id;
-    if (data.status) {
-      todo.completedAt = new Date();
-    } else {
+    if (data.completedAt) {
       todo.completedAt = null;
+    } else {
+      todo.completedAt = new Date();
     }
     await todoRepository.save(todo);
 
     const response = await todoRepository.find({
       select: {
         id: true,
-        status: true,
         completedAt: true,
       },
       where: {
         id: data.id,
       },
     });
-    console.log(response);
 
     return res.status(200).json(response);
   } catch (error) {
@@ -101,7 +94,7 @@ router.put("/updateTodo", async (req, res, next) => {
         title: true,
         description: true,
         deadline: true,
-        status: true,
+        completedAt: true,
       },
       where: {
         id: req.body.data.id,
@@ -128,7 +121,6 @@ router.put("/toggleArchiveTodo", async (req, res, next) => {
       todo.archivedAt = new Date();
       await todoRepository.save(todo);
     }
-    console.log(data);
 
     const response = await todoRepository.find({
       select: {
@@ -139,8 +131,6 @@ router.put("/toggleArchiveTodo", async (req, res, next) => {
         id: req.body.data.id,
       },
     });
-
-    console.log(response);
 
     return res.status(200).json(response);
   } catch (error) {

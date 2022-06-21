@@ -44,11 +44,11 @@ export const deleteUserTodo = createAsyncThunk(
 
 export const changeUserTodoStatus = createAsyncThunk(
   "todo/changeTodoStatus",
-  async ({ id, status }: { id: number; status: boolean }) => {
+  async ({ id, completedAt }: { id: number; completedAt: Date }) => {
     const response = await changeTodoStatus(
       `${apiUrl}/changeStatus`,
       id,
-      status
+      completedAt
     );
     return response.data;
   }
@@ -117,7 +117,7 @@ const todoSlice = createSlice({
         const index = state.todos.findIndex(
           (todo) => todo.id === action.payload[0].id
         );
-        state.todos[index].status = action.payload[0].status;
+        state.todos[index].completedAt = action.payload[0].completedAt;
       })
       .addCase(updateUserTodo.fulfilled, (state, action) => {
         const updatedTodo: Todo = action.payload[0];
@@ -125,7 +125,6 @@ const todoSlice = createSlice({
         const index = state.todos.findIndex(
           (todo) => todo.id === updatedTodo.id
         );
-
         state.todos[index] = {
           ...state.todos[index],
           id: updatedTodo.id,

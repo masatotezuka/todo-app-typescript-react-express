@@ -22,13 +22,10 @@ export class Todo {
   @Column({ nullable: true })
   deadline: string;
 
-  //必要ないかも
-  @Column({ nullable: false })
-  status: boolean;
-
   // TODO:Userテーブルとリレーション
   // @ManyToOne(() => User, (user) => user.todos)
   // user: User;
+
   @Column("timestamptz", { default: null })
   completedAt: Date | null = null;
 

@@ -8,20 +8,21 @@ import { Modal } from "../Modal";
 type Props = {
   todo: Todo;
   deleteTodo: (id: number) => void;
-  changeTodoStatus: (id: number, status: boolean) => void;
+  changeTodoStatus: (id: number, completedAt: Date) => void;
   archiveTodo: (id: number, archivedAt: Date | null) => void;
 };
 
 export const TodoItem = React.memo(
   ({ todo, deleteTodo, changeTodoStatus, archiveTodo }: Props) => {
-    const [checked, setChecked] = useState<boolean>(todo.status);
+    const isCompleted = todo.completedAt ? true : false;
+    const [checked, setChecked] = useState<boolean>(isCompleted);
     const [showModal, setShowModal] = useState<boolean>(false);
 
     const updateStatus = useCallback(() => {
       setChecked(() => !checked);
-      changeTodoStatus(todo.id, !todo.status);
+      changeTodoStatus(todo.id, todo.completedAt);
       return;
-    }, [checked, changeTodoStatus, todo.id, todo.status]);
+    }, [checked, changeTodoStatus, todo.id, todo.completedAt]);
 
     const openModal = useCallback(() => {
       setShowModal(true);

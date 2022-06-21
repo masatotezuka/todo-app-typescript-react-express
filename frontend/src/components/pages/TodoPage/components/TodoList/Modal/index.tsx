@@ -39,7 +39,7 @@ export const Modal = React.memo(({ todo, showModal, closeModal }: Props) => {
       title: data.title,
       description: data.description,
       deadline: data.deadline,
-      status: todo.status,
+      completedAt: todo.completedAt,
       archivedAt: todo.archivedAt,
     };
     dispatch(updateUserTodo(updatedTodo));

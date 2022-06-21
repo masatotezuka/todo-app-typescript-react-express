@@ -27,8 +27,8 @@ export const TodoList = () => {
   );
 
   const handleChangeTodoStatus = useCallback(
-    (id: number, status: boolean) => {
-      dispatch(changeUserTodoStatus({ id, status }));
+    (id: number, completedAt: Date) => {
+      dispatch(changeUserTodoStatus({ id, completedAt }));
     },
     [dispatch]
   );
@@ -41,10 +41,10 @@ export const TodoList = () => {
   );
 
   const completedTodos = todos.filter(
-    (todo) => todo.status && !todo.archivedAt
+    (todo) => todo.completedAt && !todo.archivedAt
   );
   const uncompletedTodos = todos.filter(
-    (todo) => !todo.status && !todo.archivedAt
+    (todo) => !todo.completedAt && !todo.archivedAt
   );
   console.log(uncompletedTodos);
 

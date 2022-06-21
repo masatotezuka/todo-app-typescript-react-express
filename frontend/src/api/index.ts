@@ -6,7 +6,7 @@ export type Todo = {
   title: string;
   description: string;
   deadline: Date;
-  status: boolean;
+  completedAt: Date;
   archivedAt: Date | null;
 };
 
@@ -39,10 +39,10 @@ export const deleteTodo = async (apiUrl: string, id: number) => {
 export const changeTodoStatus = async (
   apiUrl: string,
   id: number,
-  status: boolean
+  completedAt: Date
 ) => {
   const res = await axios.put(apiUrl, {
-    data: { id: id, status: status },
+    data: { id: id, completedAt: completedAt },
   });
   return res;
 };
