@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../../hooks";
 import { signUpUser } from "../../../../store/authSlice";
