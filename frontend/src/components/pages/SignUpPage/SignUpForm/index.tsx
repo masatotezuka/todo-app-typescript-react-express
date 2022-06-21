@@ -36,7 +36,7 @@ export const SingUpForm: React.FC = () => {
             <InputText
               type="text"
               placeholder="性"
-              register={register("firstName", { required: true })}
+              register={register("lastName", { required: true })}
             ></InputText>
             {errors.firstName && "文字が入力されていません"}
           </NameInputWrapper>
@@ -44,7 +44,7 @@ export const SingUpForm: React.FC = () => {
             <InputText
               type="text"
               placeholder="名"
-              register={register("lastName", { required: true })}
+              register={register("firstName", { required: true })}
             ></InputText>
             {errors.firstName && "文字が入力されていません"}
           </NameInputWrapper>

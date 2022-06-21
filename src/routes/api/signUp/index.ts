@@ -30,8 +30,6 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
       lastName: req.body.lastName,
       email: req.body.email,
       password: hashPassword,
-      verificationToken: "ddddd",
-      verificationTokenExpiredAt: new Date(),
       createdAt: new Date(),
       updateAt: new Date(),
     });

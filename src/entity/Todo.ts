@@ -22,6 +22,7 @@ export class Todo {
   @Column({ nullable: true })
   deadline: string;
 
+  //必要ないかも
   @Column({ nullable: false })
   status: boolean;
 

@@ -21,7 +21,7 @@ export const TodoItem = React.memo(
       setChecked(() => !checked);
       changeTodoStatus(todo.id, !todo.status);
       return;
-    }, [checked, changeTodoStatus, todo.id]);
+    }, [checked, changeTodoStatus, todo.id, todo.status]);
 
     const openModal = useCallback(() => {
       setShowModal(true);

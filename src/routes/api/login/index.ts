@@ -24,9 +24,9 @@ router.post("/", async (req, res, next) => {
     if (!result) {
       throw new UserError(400, "USERS_NOT_EXISTS_USER");
     }
-    const match = await bcrypt.compare(user.password, result.password);
-    if (match) {
-      console.log(result);
+    //変数を作成するべきか
+    // const match = await bcrypt.compare(user.password, result.password);
+    if (await bcrypt.compare(user.password, result.password)) {
       const jwtToken = jwtHelper.createToken({ userId: result.id });
       res
         .status(200)
@@ -35,9 +35,12 @@ router.post("/", async (req, res, next) => {
           expires: new Date(Date.now() + ms("2d")),
         })
         .json({
-          id: result.id,
-          firstName: result.firstName,
-          lastName: result.lastName,
+          user: {
+            id: result.id,
+            firstName: result.firstName,
+            lastName: result.lastName,
+          },
+          jwtToken: jwtToken,
         });
     } else {
     }

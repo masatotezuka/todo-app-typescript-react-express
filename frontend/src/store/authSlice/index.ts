@@ -1,16 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { useNavigate } from "react-router-dom";
 import { User, signUp, login } from "../../api";
 
 type InitialState = {
   user: User;
   isLoggedIn: boolean;
+  jwtToken: string;
   status: "idle" | "pending" | "fulfilled" | "rejected";
 };
 
 const initialState: InitialState = {
   user: { email: "" },
   isLoggedIn: false,
+  jwtToken: "",
   status: "idle",
 };
 
@@ -26,8 +27,6 @@ export const signUpUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk("auth/login", async (data: User) => {
   const response = await login(`${apiUrl}/login`, data);
-  console.log(data);
-
   return response.data;
 });
 
@@ -45,9 +44,8 @@ export const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.status = "fulfilled";
         state.isLoggedIn = true;
-        console.log(action.payload);
-
-        state.user = action.payload;
+        state.user = action.payload.user;
+        state.jwtToken = action.payload.jwtToken;
       });
   },
 });

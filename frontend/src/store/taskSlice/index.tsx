@@ -58,6 +58,7 @@ export const updateUserTodo = createAsyncThunk(
   "todo/updateTodo",
   async (todo: Todo) => {
     const response = await updateTodo(`${apiUrl}/updateTodo`, todo);
+    //ここで型定義
     return response.data;
   }
 );
