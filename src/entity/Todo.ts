@@ -23,8 +23,8 @@ export class Todo {
   deadline: string;
 
   // TODO:Userテーブルとリレーション
-  // @ManyToOne(() => User, (user) => user.todos)
-  // user: User;
+  @ManyToOne(() => User, (user) => user.todos)
+  user: User;
 
   @Column("timestamptz", { default: null })
   completedAt: Date | null = null;

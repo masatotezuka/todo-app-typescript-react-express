@@ -75,14 +75,6 @@ export const toggleArchiveUserTodo = createAsyncThunk(
   }
 );
 
-// export const activeUserTodo = createAsyncThunk(
-//   "todo/activeTodo",
-//   async (id: number) => {
-//     const response = await activeTodo(`${apiUrl}/activeTodo`, id);
-//     return response.data;
-//   }
-// );
-
 const initialState: InitialState = {
   todos: [],
   status: "idle",

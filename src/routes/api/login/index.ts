@@ -1,5 +1,4 @@
 import * as express from "express";
-import { Request, Response, NextFunction } from "express";
 import { AppDataSource } from "../../../../ormconfig";
 import { User } from "../../../entity/User";
 import { UserError } from "../../../helper/errorHandleHelper";
@@ -24,9 +23,9 @@ router.post("/", async (req, res, next) => {
     if (!result) {
       throw new UserError(400, "USERS_NOT_EXISTS_USER");
     }
-    //変数を作成するべきか
-    // const match = await bcrypt.compare(user.password, result.password);
-    if (await bcrypt.compare(user.password, result.password)) {
+
+    const match = await bcrypt.compare(user.password, result.password);
+    if (match) {
       const jwtToken = jwtHelper.createToken({ userId: result.id });
       res
         .status(200)

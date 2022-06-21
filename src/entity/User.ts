@@ -32,8 +32,8 @@ export class User {
   verificationTokenExpiredAt: Date;
 
   // TODO:Todoテーブルとリレーション
-  // @OneToMany(() => Todo, (todo) => todo.user)
-  // todos: Todo[];
+  @OneToMany(() => Todo, (todo) => todo.user, { cascade: true })
+  todos: Todo[];
 
   @CreateDateColumn()
   createdAt: Date;

@@ -1,16 +1,14 @@
 import * as express from "express";
-import { RequestHandler } from "express";
 import { AppDataSource } from "../../../../ormconfig";
 import { Todo } from "../../../entity/Todo";
 import { User } from "../../../entity/User";
 
 const router = express.Router();
 const todoRepository = AppDataSource.getRepository(Todo);
+const userRepository = AppDataSource.getRepository(User);
 
 router.get("/", async (req, res, next) => {
   try {
-    console.log(req.cookies.jwtToken);
-
     const todos = await todoRepository.find({
       select: {
         id: true,
@@ -36,7 +34,12 @@ router.post("/", async (req, res, next) => {
     todos.description = req.body.description;
     todos.deadline = req.body.deadline;
     todos.completedAt = null;
+    const user = new User();
+    user.todos = [todos];
     await todoRepository.save(todos);
+
+    // await AppDataSource.manager.save(user);
+    // await userRepository.save(user);
     return res.status(200).json(todos);
   } catch (error) {
     console.log(error);

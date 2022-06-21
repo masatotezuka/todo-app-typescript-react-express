@@ -1,7 +1,6 @@
 import * as express from "express";
 import { Request, Response, NextFunction } from "express";
 import { User } from "../../../entity/User";
-import { DataSource } from "typeorm";
 import { AppDataSource } from "../../../../ormconfig";
 import * as bcrypt from "bcrypt";
 import { UserError, ServerError } from "../../../helper/errorHandleHelper";
