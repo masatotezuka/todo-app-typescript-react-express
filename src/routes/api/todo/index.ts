@@ -78,7 +78,7 @@ router.put("/changeStatus", async (req, res, next) => {
       },
     });
 
-    return res.status(200).json(response);
+    return res.status(200).json(response[0]);
   } catch (error) {
     console.log(error);
   }

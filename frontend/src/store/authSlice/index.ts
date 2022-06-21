@@ -19,16 +19,19 @@ const apiUrl = "http://localhost:8000/api";
 
 export const signUpUser = createAsyncThunk(
   "auth/signUp",
-  async (data: User) => {
+  async (data: User): Promise<User[]> => {
     const response = await signUp(`${apiUrl}/sign-up`, data);
     return response.data;
   }
 );
 
-export const loginUser = createAsyncThunk("auth/login", async (data: User) => {
-  const response = await login(`${apiUrl}/login`, data);
-  return response.data;
-});
+export const loginUser = createAsyncThunk(
+  "auth/login",
+  async (data: User): Promise<{ user: User; jwtToken: string }> => {
+    const response = await login(`${apiUrl}/login`, data);
+    return response.data;
+  }
+);
 
 export const authSlice = createSlice({
   name: "auth",

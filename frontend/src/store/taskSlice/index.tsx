@@ -23,20 +23,27 @@ const apiUrl = "http://localhost:8000/api/todo";
 
 export const createUserTodo = createAsyncThunk(
   "todo/createTodo",
-  async (data: { title: string; description: string; deadline: Date }) => {
+  async (data: {
+    title: string;
+    description: string;
+    deadline: Date;
+  }): Promise<Todo> => {
     const response = await createTodo(apiUrl, data);
     return response.data;
   }
 );
 
-export const fetchUserTodo = createAsyncThunk("todo/fetchTodo", async () => {
-  const response = await fetchTodo(apiUrl);
-  return response.data;
-});
+export const fetchUserTodo = createAsyncThunk(
+  "todo/fetchTodo",
+  async (): Promise<Todo[]> => {
+    const response = await fetchTodo(apiUrl);
+    return response.data;
+  }
+);
 
 export const deleteUserTodo = createAsyncThunk(
   "todo/deleteTodo",
-  async (id: number) => {
+  async (id: number): Promise<number> => {
     const response = await deleteTodo(apiUrl, id);
     return response.data;
   }
@@ -44,7 +51,13 @@ export const deleteUserTodo = createAsyncThunk(
 
 export const changeUserTodoStatus = createAsyncThunk(
   "todo/changeTodoStatus",
-  async ({ id, completedAt }: { id: number; completedAt: Date }) => {
+  async ({
+    id,
+    completedAt,
+  }: {
+    id: number;
+    completedAt: Date;
+  }): Promise<{ id: number; completedAt: Date }> => {
     const response = await changeTodoStatus(
       `${apiUrl}/changeStatus`,
       id,
@@ -56,16 +69,21 @@ export const changeUserTodoStatus = createAsyncThunk(
 
 export const updateUserTodo = createAsyncThunk(
   "todo/updateTodo",
-  async (todo: Todo) => {
+  async (todo: Todo): Promise<Todo[]> => {
     const response = await updateTodo(`${apiUrl}/updateTodo`, todo);
-    //ここで型定義
     return response.data;
   }
 );
 
 export const toggleArchiveUserTodo = createAsyncThunk(
   "todo/archiveTodo",
-  async ({ id, archivedAt }: { id: number; archivedAt: Date | null }) => {
+  async ({
+    id,
+    archivedAt,
+  }: {
+    id: number;
+    archivedAt: Date | null;
+  }): Promise<[{ id: number; archivedAt: Date | null }]> => {
     const response = await toggleArchiveTodo(
       `${apiUrl}/toggleArchiveTodo`,
       id,
@@ -107,9 +125,9 @@ const todoSlice = createSlice({
       .addCase(changeUserTodoStatus.fulfilled, (state, action) => {
         state.status = "fulfilled";
         const index = state.todos.findIndex(
-          (todo) => todo.id === action.payload[0].id
+          (todo) => todo.id === action.payload.id
         );
-        state.todos[index].completedAt = action.payload[0].completedAt;
+        state.todos[index].completedAt = action.payload.completedAt;
       })
       .addCase(updateUserTodo.fulfilled, (state, action) => {
         const updatedTodo: Todo = action.payload[0];
