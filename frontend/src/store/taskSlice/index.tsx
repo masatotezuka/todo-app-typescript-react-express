@@ -20,7 +20,7 @@ type InitialState = {
   status: "idle" | "pending" | "fulfilled" | "rejected";
 };
 
-const apiUrl = config.apiUrl;
+const apiUrl = `${config.apiUrl}/todo`;
 
 export const createUserTodo = createAsyncThunk(
   "todo/createTodo",
