@@ -24,7 +24,6 @@ export const Modal = React.memo(({ todo, showModal, closeModal }: Props) => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<Inputs>({
     defaultValues: {
       title: todo.title,
@@ -62,6 +61,7 @@ export const Modal = React.memo(({ todo, showModal, closeModal }: Props) => {
                     type="text"
                     register={register("title", { required: true })}
                   ></InputText>
+                  {errors.title && "文字が入力されていません"}
                 </InputWrapper>
                 <InputTitleWrapper>
                   <InputTitle>詳細</InputTitle>
@@ -71,6 +71,7 @@ export const Modal = React.memo(({ todo, showModal, closeModal }: Props) => {
                     type="text"
                     register={register("description", { required: true })}
                   ></InputText>
+                  {errors.description && "文字が入力されていません"}
                 </InputWrapper>
                 <InputTitleWrapper>
                   <InputTitle>日付</InputTitle>
@@ -80,6 +81,7 @@ export const Modal = React.memo(({ todo, showModal, closeModal }: Props) => {
                     type="date"
                     register={register("deadline", { required: true })}
                   ></InputText>
+                  {errors.deadline && "文字が入力されていません"}
                 </InputWrapper>
                 <ButtonsWrapper>
                   <ButtonWrapper>

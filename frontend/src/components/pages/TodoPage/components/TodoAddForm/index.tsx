@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Button } from "../../../../parts/Button/Button";
 import { InputText } from "../../../../parts/InputText";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from "../../../../../hooks";
+import { useAppDispatch } from "../../../../../hooks";
 import { createUserTodo } from "../../../../../store/taskSlice";
 
 type Inputs = {
@@ -40,6 +40,7 @@ export const TodoAddForm = () => {
             placeholder="タイトルを入力してください。"
             register={register("title", { required: true })}
           ></InputText>
+          {errors.title && "文字が入力されていません"}
         </InputWrapper>
         <InputWrapper width="400px">
           <InputText
@@ -47,6 +48,7 @@ export const TodoAddForm = () => {
             placeholder="詳細を入力してください。"
             register={register("description", { required: true })}
           ></InputText>
+          {errors.description && "文字が入力されていません"}
         </InputWrapper>
         <InputWrapper width="150px">
           <InputText
@@ -54,6 +56,7 @@ export const TodoAddForm = () => {
             placeholder="期限日"
             register={register("deadline", { required: true })}
           ></InputText>
+          {errors.deadline && "文字が入力されていません"}
         </InputWrapper>
         <ButtonWrapper>
           <Button child="タスクの追加" type="submit"></Button>
