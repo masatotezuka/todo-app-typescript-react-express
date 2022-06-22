@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { User, signUp, login } from "../../api";
-
+import config from "../../config/config.json";
 type InitialState = {
   user: User;
   isLoggedIn: boolean;
   jwtToken: string;
   status: "idle" | "pending" | "fulfilled" | "rejected";
 };
+const apiUrl = config.apiUrl;
 
 const initialState: InitialState = {
   user: { email: "" },
@@ -14,8 +15,6 @@ const initialState: InitialState = {
   jwtToken: "",
   status: "idle",
 };
-
-const apiUrl = "http://localhost:8000/api";
 
 export const signUpUser = createAsyncThunk(
   "auth/signUp",

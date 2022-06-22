@@ -13,13 +13,14 @@ import {
   toggleArchiveTodo,
   Todo,
 } from "../../api";
+import config from "../../config/config.json";
 
 type InitialState = {
   todos: Todo[];
   status: "idle" | "pending" | "fulfilled" | "rejected";
 };
 
-const apiUrl = "http://localhost:8000/api/todo";
+const apiUrl = config.apiUrl;
 
 export const createUserTodo = createAsyncThunk(
   "todo/createTodo",
