@@ -9,6 +9,7 @@ import { useAppSelector } from "../../../hooks";
 
 export const TodoPage: React.FC = () => {
   const user = useAppSelector((state) => state.auth.user);
+  // useEffect(s,[])
   return (
     <>
       <Wrapper>

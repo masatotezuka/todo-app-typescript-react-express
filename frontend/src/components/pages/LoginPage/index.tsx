@@ -23,7 +23,8 @@ export const LoginPage: React.FC = () => {
 };
 
 const Wrapper = styled.div`
-  padding: 50px 400px 0px 400px;
+  max-width: 600px;
+  margin: 40px auto 0px auto;
 `;
 
 const FormWrapper = styled.div`
