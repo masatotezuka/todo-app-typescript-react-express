@@ -41,7 +41,9 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
       where: { email: req.body.email },
     });
 
-    const jwtToken = jwtHelper.createToken({ userId: result[0].id });
+    const jwtToken = jwtHelper.createToken();
+
+    res.locals.lastName = result[0].lastName;
     return res
       .status(200)
       .cookie("jwtToken", jwtToken, {

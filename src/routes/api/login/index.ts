@@ -26,7 +26,7 @@ router.post("/", async (req, res, next) => {
 
     const match = await bcrypt.compare(user.password, result.password);
     if (match) {
-      const jwtToken = jwtHelper.createToken({ userId: result.id });
+      const jwtToken = jwtHelper.createToken();
       res
         .status(200)
         .cookie("jwtToken", jwtToken, {
@@ -41,6 +41,7 @@ router.post("/", async (req, res, next) => {
           },
           jwtToken: jwtToken,
         });
+      console.log(result.lastName);
     } else {
     }
   } catch (error) {

@@ -12,7 +12,6 @@ import {
 
 export const TodoList = () => {
   const dispatch = useAppDispatch();
-
   const { todos } = useAppSelector((state) => state.todos);
 
   useEffect(() => {
@@ -46,7 +45,6 @@ export const TodoList = () => {
   const uncompletedTodos = todos.filter(
     (todo) => !todo.completedAt && !todo.archivedAt
   );
-  console.log(uncompletedTodos);
 
   return (
     <>

@@ -5,15 +5,14 @@ import { TodoList } from "./components/TodoList";
 import { Link } from "../../parts/Link";
 import { Route, Routes } from "react-router-dom";
 import { ArchivedList } from "./components/ArchivedList";
-import { useAppSelector } from "../../../hooks";
 
 export const TodoPage: React.FC = () => {
-  const user = useAppSelector((state) => state.auth.user);
-  // useEffect(s,[])
+  const lastName = localStorage.getItem("lastName");
+
   return (
     <>
       <Wrapper>
-        <Title>{user.lastName}さんのTodoリスト</Title>
+        <Title>{lastName}さんのTodoリスト</Title>
         <TodoAddForm></TodoAddForm>
         <Routes>
           <Route path="active" element={<TodoList />}></Route>

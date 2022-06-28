@@ -1,13 +1,23 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 
+import { useAuth } from "./hooks/useAuth";
 type Props = {
-  isLoggedIn: boolean;
-  //1つ以上のReactコンポーネント
   children: React.ReactNode;
 };
 
 export const PrivateRoute: React.FC<Props> = React.memo((props) => {
-  const { children, isLoggedIn } = props;
-  return isLoggedIn ? <>{children}</> : <Navigate to="/" />;
+  const { children } = props;
+
+  const isAuthenticated = useAuth();
+  console.log(isAuthenticated);
+
+  if (!isAuthenticated) {
+    return <div>Loading...</div>;
+  }
+  if (isAuthenticated) {
+    return <>{children}</>;
+  }
+
+  return <Navigate to="/" />;
 });

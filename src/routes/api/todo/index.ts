@@ -5,7 +5,6 @@ import { User } from "../../../entity/User";
 
 const router = express.Router();
 const todoRepository = AppDataSource.getRepository(Todo);
-const userRepository = AppDataSource.getRepository(User);
 
 router.get("/", async (req, res, next) => {
   try {
@@ -38,8 +37,6 @@ router.post("/", async (req, res, next) => {
     user.todos = [todos];
     await todoRepository.save(todos);
 
-    // await AppDataSource.manager.save(user);
-    // await userRepository.save(user);
     return res.status(200).json(todos);
   } catch (error) {
     console.log(error);

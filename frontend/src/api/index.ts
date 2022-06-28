@@ -72,3 +72,13 @@ export const login = async (apiUrl: string, data: User) => {
   const res = await axios.post(apiUrl, data);
   return res;
 };
+
+export const checkJwtToken = async (apiUrl: string) => {
+  const res = await axios.get(apiUrl);
+  return res;
+};
+
+export const fetchUserData = async (apiUrl: string) => {
+  const res = await axios.get(apiUrl);
+  return res;
+};

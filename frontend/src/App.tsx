@@ -7,7 +7,6 @@ import { LoginPage } from "./components/pages/LoginPage";
 import { NotFoundPage } from "./components/pages/NotFoundPage";
 import { ResetPasswordPage } from "./components/pages/UserPage";
 import { PrivateRoute } from "./PrivateRouter";
-import { useAppSelector } from "./hooks";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -15,10 +14,6 @@ const Wrapper = styled.div`
   margin: 0px auto;
 `;
 const App: React.FC = () => {
-  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
-  console.log(isLoggedIn);
-  console.log(isLoggedIn);
-
   return (
     <>
       <Wrapper>
@@ -30,21 +25,11 @@ const App: React.FC = () => {
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route
             path="/todo/*"
-            element={
-              <PrivateRoute
-                isLoggedIn={isLoggedIn}
-                children={<TodoPage />}
-              ></PrivateRoute>
-            }
+            element={<PrivateRoute children={<TodoPage />}></PrivateRoute>}
           >
             <Route
               path="archived"
-              element={
-                <PrivateRoute
-                  isLoggedIn={isLoggedIn}
-                  children={<TodoPage />}
-                ></PrivateRoute>
-              }
+              element={<PrivateRoute children={<TodoPage />}></PrivateRoute>}
             />
           </Route>
           <Route path="*" element={<NotFoundPage />} />
