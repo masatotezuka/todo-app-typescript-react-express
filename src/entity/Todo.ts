@@ -1,26 +1,40 @@
-import { Entity, PrimaryColumn, Column, ManyToOne } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from "typeorm";
 import { User } from "./User";
 
 @Entity()
 export class Todo {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true })
+  @Column({ nullable: false })
   title: string;
 
-  @Column()
+  @Column({ nullable: true })
   description: string;
 
-  @Column()
+  @Column({ nullable: true })
   deadline: string;
 
+  // TODO:Userテーブルとリレーション
   @ManyToOne(() => User, (user) => user.todos)
   user: User;
 
-  @Column()
+  @Column("timestamptz", { default: null })
+  completedAt: Date | null = null;
+
+  @Column("timestamptz", { default: null })
+  archivedAt: Date | null = null;
+
+  @CreateDateColumn()
   createdAt: Date;
 
-  @Column()
+  @UpdateDateColumn()
   updateAt: Date;
 }
