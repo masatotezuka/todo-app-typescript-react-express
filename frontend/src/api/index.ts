@@ -78,6 +78,7 @@ export const checkJwtToken = async (apiUrl: string) => {
   return res;
 };
 
+//今は使用していない
 export const fetchUserData = async (apiUrl: string) => {
   const res = await axios.get(apiUrl);
   return res;

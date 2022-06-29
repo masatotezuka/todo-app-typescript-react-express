@@ -6,11 +6,9 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const PrivateRoute: React.FC<Props> = React.memo((props) => {
+export const PrivateRoute = React.memo((props: Props) => {
   const { children } = props;
-
   const isAuthenticated = useAuth();
-  console.log(isAuthenticated);
 
   if (!isAuthenticated) {
     return <div>Loading...</div>;
@@ -20,4 +18,18 @@ export const PrivateRoute: React.FC<Props> = React.memo((props) => {
   }
 
   return <Navigate to="/" />;
+});
+
+export const GuestRoute = React.memo((props: Props) => {
+  const { children } = props;
+  const isAuthenticated = useAuth();
+
+  if (!isAuthenticated) {
+    return <div>Loading...</div>;
+  }
+  if (isAuthenticated) {
+    return <Navigate to="/todo/active" />;
+  }
+
+  return <>{children}</>;
 });

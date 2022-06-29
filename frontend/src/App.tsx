@@ -6,7 +6,7 @@ import { SignUpPage } from "./components/pages/SignUpPage";
 import { LoginPage } from "./components/pages/LoginPage";
 import { NotFoundPage } from "./components/pages/NotFoundPage";
 import { ResetPasswordPage } from "./components/pages/UserPage";
-import { PrivateRoute } from "./PrivateRouter";
+import { GuestRoute, PrivateRoute } from "./PrivateRouter";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -18,8 +18,14 @@ const App: React.FC = () => {
     <>
       <Wrapper>
         <Routes>
-          <Route path="/" element={<TopPage />} />
-          <Route path="/sign-up" element={<SignUpPage />} />
+          <Route
+            path="/"
+            element={<GuestRoute children={<TopPage />}></GuestRoute>}
+          />
+          <Route
+            path="/sign-up"
+            element={<GuestRoute children={<SignUpPage />}></GuestRoute>}
+          />
           <Route path="/login" element={<LoginPage />} />
           {/* リセットページ */}
           <Route path="/reset-password" element={<ResetPasswordPage />} />

@@ -24,7 +24,6 @@ router.get("/tokenVerification", (req, res, next) => {
     if (err) {
       next(err.message);
     } else {
-      console.log(decoded);
       const token = jwtHelper.createToken();
       res.cookie("jwtToken", token, {
         httpOnly: true,
