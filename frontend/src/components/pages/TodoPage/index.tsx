@@ -3,12 +3,19 @@ import styled from "styled-components";
 import { TodoAddForm } from "./components/TodoAddForm";
 import { TodoList } from "./components/TodoList";
 import { Link } from "../../parts/Link";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { ArchivedList } from "./components/ArchivedList";
-
+import { logout } from "../../../api";
+import config from "../../../config/config.json";
+import { Button } from "../../parts/Button/Button";
 export const TodoPage: React.FC = () => {
   const lastName = localStorage.getItem("lastName");
+  const navigate = useNavigate();
 
+  const logoutHandler = async () => {
+    await logout(`${config.apiUrl}/logout`);
+    navigate("/", { replace: true });
+  };
   return (
     <>
       <Wrapper>
@@ -19,7 +26,7 @@ export const TodoPage: React.FC = () => {
           <Route path="archived" element={<ArchivedList />}></Route>
         </Routes>
         <LinkWrapper>
-          <Link path="/" text="Topページに戻る"></Link>
+          <Button child="ログアウト" onClick={() => logoutHandler()}></Button>
           <Routes>
             <Route
               path="archived"

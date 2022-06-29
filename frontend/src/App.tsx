@@ -6,14 +6,18 @@ import { SignUpPage } from "./components/pages/SignUpPage";
 import { LoginPage } from "./components/pages/LoginPage";
 import { NotFoundPage } from "./components/pages/NotFoundPage";
 import { ResetPasswordPage } from "./components/pages/UserPage";
-import { GuestRoute, PrivateRoute } from "./PrivateRouter";
+import { GuestRoute, PrivateRoute } from "./AuthRouter";
 import styled from "styled-components";
+import { useAuth } from "./hooks/useAuth";
 
 const Wrapper = styled.div`
   max-width: 1440px;
   margin: 0px auto;
 `;
 const App: React.FC = () => {
+  const isAuthenticated = useAuth();
+  console.log(isAuthenticated);
+
   return (
     <>
       <Wrapper>
@@ -26,7 +30,10 @@ const App: React.FC = () => {
             path="/sign-up"
             element={<GuestRoute children={<SignUpPage />}></GuestRoute>}
           />
-          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/login"
+            element={<GuestRoute children={<LoginPage />}></GuestRoute>}
+          />
           {/* リセットページ */}
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route

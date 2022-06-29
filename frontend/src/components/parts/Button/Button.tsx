@@ -4,12 +4,12 @@ import { StyledButton } from "./styledButton";
 type Props = {
   child: string;
   onClick?: () => void;
-  type?: string;
+  type?: "button" | "submit" | "reset" | undefined;
 };
 
 export const Button = ({ child, onClick, type }: Props) => {
   return (
-    <StyledButton {...type} onClick={onClick}>
+    <StyledButton type={type} onClick={onClick}>
       {child}
     </StyledButton>
   );

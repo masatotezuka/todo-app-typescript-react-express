@@ -83,3 +83,12 @@ export const fetchUserData = async (apiUrl: string) => {
   const res = await axios.get(apiUrl);
   return res;
 };
+
+export const logout = async (apiUrl: string) => {
+  try {
+    await axios.get(apiUrl);
+    return;
+  } catch (error) {
+    console.log(error);
+  }
+};
