@@ -29,5 +29,6 @@ AppDataSource.initialize()
   });
 
 app.use("/api", api);
+console.log(process.env.MAIL_PASS);
 
 app.listen(8000);
