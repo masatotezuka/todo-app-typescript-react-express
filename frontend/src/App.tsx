@@ -38,6 +38,7 @@ const App: React.FC = () => {
             element={<GuestRoute children={<LoginPage />}></GuestRoute>}
           />
           {/* リセットページ */}
+          <Route path="/email-send-complete" element={<EmailSendComplete />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route
             path="/verification-password"
