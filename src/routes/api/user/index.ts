@@ -24,10 +24,10 @@ router.post("/resetPassword", async (req, res, next) => {
     );
 
     const verificationUrl = `http://localhost:3000/verification-password`;
-
     sendMail(req.body.email, verificationUrl).catch(console.error);
 
     //フロントエンドでtokenを送信できるようにする
+    res.status(200).send("success");
   } catch (error) {
     console.log(error);
   }
