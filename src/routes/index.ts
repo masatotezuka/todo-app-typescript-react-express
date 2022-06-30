@@ -4,6 +4,7 @@ import signUp from "./api/signUp";
 import login from "./api/login";
 import logout from "./api/logout";
 import todo from "./api/todo";
+import user from "./api/user";
 import { jwtHelper } from "../helper/jwtHelper";
 import ms = require("ms");
 import * as jwt from "jsonwebtoken";
@@ -13,8 +14,7 @@ const router = express.Router();
 router.use("/sign-up", signUp);
 router.use("/login", login);
 router.use("/logout", logout);
-
-console.log("middle");
+router.use("/user", user);
 
 router.get("/tokenVerification", (req, res, next) => {
   let token = "";

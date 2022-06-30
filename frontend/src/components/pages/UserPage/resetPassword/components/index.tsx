@@ -1,21 +1,25 @@
 import React from "react";
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { InputText } from "../../../parts/InputText";
-import { Button } from "../../../parts/Button/Button";
+import { InputText } from "../../../../parts/InputText";
+import { Button } from "../../../../parts/Button/Button";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 type Inputs = {
   email: string;
 };
-
 export const ResetPasswordForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
+  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
+    await axios.post("http://localhost:8000/api/user/resetPassword", data);
+    navigate("/email-send-complete");
   };
   return (
     <>

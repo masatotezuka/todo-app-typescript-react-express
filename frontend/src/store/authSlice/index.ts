@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, Slice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { User, signUp, login, fetchUserData } from "../../api";
 import config from "../../config/config.json";
 type InitialState = {
@@ -42,7 +42,7 @@ export const fetchUserInfo = createAsyncThunk(
   }
 );
 
-export const authSlice: Slice = createSlice({
+export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {},

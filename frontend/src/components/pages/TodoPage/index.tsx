@@ -25,8 +25,7 @@ export const TodoPage: React.FC = () => {
           <Route path="active" element={<TodoList />}></Route>
           <Route path="archived" element={<ArchivedList />}></Route>
         </Routes>
-        <LinkWrapper>
-          <Button child="ログアウト" onClick={() => logoutHandler()}></Button>
+        <BottomWrapper>
           <Routes>
             <Route
               path="archived"
@@ -39,7 +38,10 @@ export const TodoPage: React.FC = () => {
               }
             ></Route>
           </Routes>
-        </LinkWrapper>
+          <ButtonWrapper>
+            <Button child="ログアウト" onClick={() => logoutHandler()}></Button>
+          </ButtonWrapper>
+        </BottomWrapper>
       </Wrapper>
     </>
   );
@@ -51,15 +53,21 @@ const Title = styled.p`
   margin: 0px;
 `;
 
-const LinkWrapper = styled.div`
-  width: 35%;
+const BottomWrapper = styled.div`
   margin: 20px auto 0px auto;
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const ButtonWrapper = styled.div`
+  margin-top: 20px;
 `;
 
 const Wrapper = styled.div`
-  padding: 40px 200px;
+  max-width: 800px;
+  margin: 50px auto 0px auto;
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
 `;
