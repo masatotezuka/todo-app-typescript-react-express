@@ -18,13 +18,9 @@ router.use("/user", user);
 
 router.get("/tokenVerification", (req, res, next) => {
   let token = "";
-  console.log("check");
-
   if (req.cookies.jwtToken) {
     token = req.cookies.jwtToken;
   } else {
-    console.log("no token");
-
     return res.status(200).json({ isAuthenticated: false });
   }
 

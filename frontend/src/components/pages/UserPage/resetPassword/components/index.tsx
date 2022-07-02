@@ -4,7 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { InputText } from "../../../../parts/InputText";
 import { Button } from "../../../../parts/Button/Button";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useToken } from "../../../../../hooks/useToken";
 
 type Inputs = {
   email: string;
@@ -16,9 +16,9 @@ export const ResetPasswordForm = () => {
     formState: { errors },
   } = useForm<Inputs>();
   const navigate = useNavigate();
-
+  const { fetchToken } = useToken();
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    await axios.post("http://localhost:8000/api/user/resetPassword", data);
+    await fetchToken(data);
     navigate("/email-send-complete");
   };
   return (

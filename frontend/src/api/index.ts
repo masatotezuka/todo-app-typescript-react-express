@@ -18,6 +18,10 @@ export type User = {
   password?: string;
 };
 
+export type VerificationPassword = {
+  password: string;
+};
+
 export const fetchTodo = async (apiUrl: string) => {
   const res = await axios.get(apiUrl);
   return res;
@@ -92,3 +96,24 @@ export const logout = async (apiUrl: string) => {
     console.log(error);
   }
 };
+
+export const verificationPassword = async (
+  apiUrl: string,
+  data: VerificationPassword
+) => {
+  try {
+    await axios.put(apiUrl, { data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+// export const resetPassword = async ()=>{
+//   try {
+//   await axios.post("http://localhost:8000/api/user/resetPassword", data);
+
+//   } catch (error) {
+//     console.log(error);
+
+//   }
+
+// }

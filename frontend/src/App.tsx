@@ -37,11 +37,11 @@ const App: React.FC = () => {
             path="/login"
             element={<GuestRoute children={<LoginPage />}></GuestRoute>}
           />
-          {/* リセットページ */}
           <Route path="/email-send-complete" element={<EmailSendComplete />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
+          {/* TODO:tokenパラメータと一致したときにアクセスできるようにする */}
           <Route
-            path="/verification-password"
+            path={`/verification-password`}
             element={<VerificationPasswordPage />}
           />
           <Route
