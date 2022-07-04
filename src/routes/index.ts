@@ -2,7 +2,9 @@ import * as express from "express";
 import { Request, Response, NextFunction } from "express";
 import signUp from "./api/signUp";
 import login from "./api/login";
+import logout from "./api/logout";
 import todo from "./api/todo";
+import user from "./api/user";
 import { jwtHelper } from "../helper/jwtHelper";
 import ms = require("ms");
 import * as jwt from "jsonwebtoken";
@@ -11,20 +13,21 @@ const router = express.Router();
 
 router.use("/sign-up", signUp);
 router.use("/login", login);
+router.use("/logout", logout);
+router.use("/user", user);
 
 router.get("/tokenVerification", (req, res, next) => {
   let token = "";
   if (req.cookies.jwtToken) {
     token = req.cookies.jwtToken;
   } else {
-    return res.status(401);
+    return res.status(200).json({ isAuthenticated: false });
   }
 
   jwt.verify(token, "secret123", function (err, decoded) {
     if (err) {
       next(err.message);
     } else {
-      console.log(decoded);
       const token = jwtHelper.createToken();
       res.cookie("jwtToken", token, {
         httpOnly: true,

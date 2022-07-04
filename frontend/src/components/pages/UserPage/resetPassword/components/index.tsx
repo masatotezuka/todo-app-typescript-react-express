@@ -1,21 +1,25 @@
 import React from "react";
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { InputText } from "../../../parts/InputText";
-import { Button } from "../../../parts/Button/Button";
+import { InputText } from "../../../../parts/InputText";
+import { Button } from "../../../../parts/Button/Button";
+import { useNavigate } from "react-router-dom";
+import { useToken } from "../../../../../hooks/useToken";
 
 type Inputs = {
   email: string;
 };
-
 export const ResetPasswordForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
+  const navigate = useNavigate();
+  const { fetchToken } = useToken();
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
+    await fetchToken(data);
+    navigate("/email-send-complete");
   };
   return (
     <>

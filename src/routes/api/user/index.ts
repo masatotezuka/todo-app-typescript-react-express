@@ -1,12 +1,72 @@
 import * as express from "express";
 import { AppDataSource } from "../../../../ormconfig";
 import { User } from "../../../entity/User";
+import { createUuid } from "../../../helper/createUuid";
+import { UserError, ServerError } from "../../../helper/errorHandleHelper";
+import { sendMail } from "../../../helper/sendMail";
+import * as bcrypt from "bcrypt";
+const router = express.Router();
+const userRepository = AppDataSource.getRepository(User);
 
-// const router = express.Router();
-// const userRepository = AppDataSource.getRepository(User);
-// router.get("/", (req, res, next) => {
-//   try {
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
+router.post("/resetPassword", async (req, res, next) => {
+  try {
+    if (!req.body.email) {
+      throw new UserError(400, "USERS_INVALID_VALUE");
+    }
+
+    const token = createUuid();
+    const tokenExpiredAt = new Date();
+    tokenExpiredAt.setHours(tokenExpiredAt.getHours() + 12);
+
+    await userRepository.update(
+      { email: req.body.email },
+      { verificationToken: token, verificationTokenExpiredAt: tokenExpiredAt }
+    );
+
+    const verificationUrl = `http://localhost:3000/verification-password/${token}`;
+    await sendMail(req.body.email, verificationUrl);
+    res.locals.lastName = "tezuka";
+    return res.status(200).json({ verificationToken: token });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.put("/verification-password/:token", async (req, res, next) => {
+  try {
+    console.log(req.params.token);
+
+    const password = req.body.data.password;
+    if (!password) {
+      throw new UserError(400, "USER_INVALID_ERROR");
+    }
+    const result = await userRepository.findOne({
+      where: {
+        verificationToken: req.params.token,
+      },
+    });
+
+    if (!result) {
+      throw new UserError(400, "USER_INVALID_ERROR");
+    }
+
+    const hashPassword = await bcrypt.hash(password, 10);
+    if (!hashPassword) {
+      throw new ServerError(500, "SERVER_ERROR");
+    }
+
+    await userRepository.update(
+      { verificationToken: req.params.token },
+      {
+        password: hashPassword,
+        verificationToken: null,
+        verificationTokenExpiredAt: null,
+      }
+    );
+    res.status(200).send("SUCCESS");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+export default router;

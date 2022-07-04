@@ -5,20 +5,17 @@ import { store } from "./store";
 import App from "./App";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { BrowserRouter } from "react-router-dom";
-import { CookiesProvider } from "react-cookie";
 const container = document.getElementById("root")!;
 const root = createRoot(container);
 
 root.render(
   <ErrorBoundary>
     <React.StrictMode>
-      <CookiesProvider>
-        <Provider store={store}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </Provider>
-      </CookiesProvider>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
     </React.StrictMode>
   </ErrorBoundary>
 );

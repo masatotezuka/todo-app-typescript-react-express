@@ -31,7 +31,6 @@ export const ArchivedList = () => {
       <TodoTable>
         <thead>
           <tr>
-            <th className="status-header"></th>
             <th className="title-header">タイトル</th>
             <th className="description-header">詳細</th>
             <th className="deadline-header">期日</th>

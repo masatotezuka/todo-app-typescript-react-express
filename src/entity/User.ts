@@ -25,11 +25,11 @@ export class User {
   @Column({ unique: true, nullable: false })
   password: string;
 
-  @Column({ nullable: true })
-  verificationToken: string;
+  @Column({ type: "varchar", nullable: true })
+  verificationToken?: string | null = null;
 
-  @Column({ nullable: true })
-  verificationTokenExpiredAt: Date;
+  @Column({ type: "timestamptz", default: null })
+  verificationTokenExpiredAt: Date | null = null;
 
   // TODO:Todoテーブルとリレーション
   @OneToMany(() => Todo, (todo) => todo.user, { cascade: true })

@@ -1,10 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { User, signUp, login, checkJwtToken, fetchUserData } from "../../api";
+import { User, signUp, login, fetchUserData } from "../../api";
 import config from "../../config/config.json";
 type InitialState = {
   user: User;
   isLoggedIn: boolean;
-  jwtToken: string;
   status: "idle" | "pending" | "fulfilled" | "rejected";
   checkJwtStatus: "idle" | "pending" | "fulfilled" | "rejected";
 };
@@ -13,7 +12,6 @@ const apiUrl = config.apiUrl;
 const initialState: InitialState = {
   user: { email: "", lastName: "" },
   isLoggedIn: false,
-  jwtToken: "",
   status: "idle",
   checkJwtStatus: "idle",
 };
@@ -34,14 +32,7 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const checkUserJwtToken = createAsyncThunk(
-  "auth/checkToken",
-  async (): Promise<{ jwtToken: string }> => {
-    const response = await checkJwtToken(`${apiUrl}/check-jwt-token`);
-    console.log(response.data);
-    return response.data;
-  }
-);
+export const logoutUser = createAsyncThunk("auth/logout", async () => {});
 
 export const fetchUserInfo = createAsyncThunk(
   "auth/fetchUserInfo",
@@ -68,16 +59,10 @@ export const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.status = "fulfilled";
         state.user = action.payload.user;
-        state.jwtToken = action.payload.jwtToken;
         const lastName = action.payload.user.lastName;
         if (typeof lastName === "string") {
           localStorage.setItem("lastName", lastName);
         }
-      })
-      .addCase(checkUserJwtToken.fulfilled, (state, action) => {
-        state.status = "fulfilled";
-        state.checkJwtStatus = "fulfilled";
-        state.isLoggedIn = true;
       })
       .addCase(fetchUserInfo.fulfilled, (state, action) => {
         state.user = action.payload[0];

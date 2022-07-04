@@ -3,12 +3,19 @@ import styled from "styled-components";
 import { TodoAddForm } from "./components/TodoAddForm";
 import { TodoList } from "./components/TodoList";
 import { Link } from "../../parts/Link";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { ArchivedList } from "./components/ArchivedList";
-
+import { logout } from "../../../api";
+import config from "../../../config/config.json";
+import { Button } from "../../parts/Button/Button";
 export const TodoPage: React.FC = () => {
   const lastName = localStorage.getItem("lastName");
+  const navigate = useNavigate();
 
+  const logoutHandler = async () => {
+    await logout(`${config.apiUrl}/logout`);
+    navigate("/", { replace: true });
+  };
   return (
     <>
       <Wrapper>
@@ -18,8 +25,7 @@ export const TodoPage: React.FC = () => {
           <Route path="active" element={<TodoList />}></Route>
           <Route path="archived" element={<ArchivedList />}></Route>
         </Routes>
-        <LinkWrapper>
-          <Link path="/" text="Topページに戻る"></Link>
+        <BottomWrapper>
           <Routes>
             <Route
               path="archived"
@@ -32,7 +38,10 @@ export const TodoPage: React.FC = () => {
               }
             ></Route>
           </Routes>
-        </LinkWrapper>
+          <ButtonWrapper>
+            <Button child="ログアウト" onClick={() => logoutHandler()}></Button>
+          </ButtonWrapper>
+        </BottomWrapper>
       </Wrapper>
     </>
   );
@@ -44,15 +53,21 @@ const Title = styled.p`
   margin: 0px;
 `;
 
-const LinkWrapper = styled.div`
-  width: 35%;
+const BottomWrapper = styled.div`
   margin: 20px auto 0px auto;
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const ButtonWrapper = styled.div`
+  margin-top: 20px;
 `;
 
 const Wrapper = styled.div`
-  padding: 40px 200px;
+  max-width: 800px;
+  margin: 50px auto 0px auto;
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
 `;
