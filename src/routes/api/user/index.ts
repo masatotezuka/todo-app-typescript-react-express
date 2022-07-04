@@ -23,8 +23,7 @@ router.post("/resetPassword", async (req, res, next) => {
       { verificationToken: token, verificationTokenExpiredAt: tokenExpiredAt }
     );
 
-    // const verificationUrl = `http://localhost:3000/verification-password/${token}`;
-    const verificationUrl = `http://localhost:3000/verification-password`;
+    const verificationUrl = `http://localhost:3000/verification-password/${token}`;
     await sendMail(req.body.email, verificationUrl);
     res.locals.lastName = "tezuka";
     return res.status(200).json({ verificationToken: token });
@@ -33,11 +32,21 @@ router.post("/resetPassword", async (req, res, next) => {
   }
 });
 
-router.put("/verification-password", async (req, res, next) => {
+router.put("/verification-password/:token", async (req, res, next) => {
   try {
-    console.log(req.body);
+    console.log(req.params.token);
+
     const password = req.body.data.password;
     if (!password) {
+      throw new UserError(400, "USER_INVALID_ERROR");
+    }
+    const result = await userRepository.findOne({
+      where: {
+        verificationToken: req.params.token,
+      },
+    });
+
+    if (!result) {
       throw new UserError(400, "USER_INVALID_ERROR");
     }
 
@@ -47,7 +56,7 @@ router.put("/verification-password", async (req, res, next) => {
     }
 
     await userRepository.update(
-      { id: 1 },
+      { verificationToken: req.params.token },
       {
         password: hashPassword,
         verificationToken: null,

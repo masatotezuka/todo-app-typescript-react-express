@@ -41,7 +41,7 @@ const App: React.FC = () => {
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           {/* TODO:tokenパラメータと一致したときにアクセスできるようにする */}
           <Route
-            path={`/verification-password`}
+            path={`/verification-password/:token`}
             element={<VerificationPasswordPage />}
           />
           <Route

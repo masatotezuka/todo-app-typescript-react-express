@@ -6,7 +6,8 @@ import { verificationPassword, VerificationPassword } from "../../../../../api";
 import { Button } from "../../../../parts/Button/Button";
 import { InputText } from "../../../../parts/InputText";
 import config from "../../../../../config/config.json";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
 export const VerificationPasswordForm = () => {
   const {
     register,
@@ -14,10 +15,12 @@ export const VerificationPasswordForm = () => {
     formState: { errors },
   } = useForm<VerificationPassword>();
   const navigate = useNavigate();
+  const { token } = useParams();
+
   const onSubmit: SubmitHandler<VerificationPassword> = async (data) => {
     try {
       await verificationPassword(
-        `${config.apiUrl}/user/verification-password`,
+        `${config.apiUrl}/user/verification-password/${token}`,
         data
       );
       navigate("/");
