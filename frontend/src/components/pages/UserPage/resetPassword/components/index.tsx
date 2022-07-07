@@ -4,7 +4,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { InputText } from "../../../../parts/InputText";
 import { Button } from "../../../../parts/Button/Button";
 import { useNavigate } from "react-router-dom";
-import { useToken } from "../../../../../hooks/useToken";
+import { requestPasswordReset } from "../../../../../api";
+import config from "../../../../../config/config.json";
 
 type Inputs = {
   email: string;
@@ -16,9 +17,8 @@ export const ResetPasswordForm = () => {
     formState: { errors },
   } = useForm<Inputs>();
   const navigate = useNavigate();
-  const { fetchToken } = useToken();
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    await fetchToken(data);
+    await requestPasswordReset(`${config.apiUrl}/user/resetPassword`, data);
     navigate("/email-send-complete");
   };
   return (

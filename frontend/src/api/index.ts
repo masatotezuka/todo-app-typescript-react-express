@@ -97,6 +97,13 @@ export const logout = async (apiUrl: string) => {
   }
 };
 
+export const requestPasswordReset = async (
+  apiUrl: string,
+  data: { email: string }
+) => {
+  axios.post(apiUrl, data);
+};
+
 export const verificationPassword = async (
   apiUrl: string,
   data: VerificationPassword
@@ -107,13 +114,3 @@ export const verificationPassword = async (
     console.log(error);
   }
 };
-// export const resetPassword = async ()=>{
-//   try {
-//   await axios.post("http://localhost:8000/api/user/resetPassword", data);
-
-//   } catch (error) {
-//     console.log(error);
-
-//   }
-
-// }
