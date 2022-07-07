@@ -22,19 +22,15 @@ export const PrivateRoute = React.memo(({ children }: Props) => {
 
 export const GuestRoute = React.memo((props: Props) => {
   const { children } = props;
-  const userId = useAppSelector((state) => state.auth.user.id);
-  console.log(userId);
 
   const check = useAuth();
-
-  console.log(check);
 
   if (!check.checked) {
     return <div>Loading...</div>;
   }
 
   if (check.isAuthenticated) {
-    return <Navigate to="/todo/active" />;
+    return <Navigate to="/todo/:userId/active" />;
   }
 
   return <>{children}</>;

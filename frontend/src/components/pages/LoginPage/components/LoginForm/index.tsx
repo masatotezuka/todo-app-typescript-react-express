@@ -27,7 +27,7 @@ export const LoginForm = () => {
     console.log(isLoggedIn);
 
     if (user.id) {
-      navigate(`/todo/active/${user.id}`);
+      navigate(`/todo/${user.id}/active`);
     }
 
     // dispatch(reset());
