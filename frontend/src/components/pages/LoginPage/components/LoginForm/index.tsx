@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { InputText } from "../../../../parts/InputText";
 import styled from "styled-components";
 import { Button } from "../../../../parts/Button/Button";
-import { useAppDispatch } from "../../../../../hooks";
+import { useAppDispatch, useAppSelector } from "../../../../../hooks";
 import { loginUser } from "../../../../../store/authSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -15,14 +15,27 @@ type LoginInputs = {
 export const LoginForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { isLoggedIn, user } = useAppSelector((state) => state.auth);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginInputs>();
+  console.log("test");
+
+  useEffect(() => {
+    console.log(isLoggedIn);
+
+    if (user.id) {
+      navigate(`/todo/active/${user.id}`);
+    }
+
+    // dispatch(reset());
+  }, [user, navigate, dispatch]);
+
   const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
     await dispatch(loginUser(data));
-    navigate("/todo/active", { replace: true });
+    // navigate("/", { replace: true });
   };
   return (
     <>

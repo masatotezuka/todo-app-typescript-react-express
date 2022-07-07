@@ -34,6 +34,7 @@ router.post("/", async (req, res, next) => {
     todos.deadline = req.body.deadline;
     todos.completedAt = null;
     const user = new User();
+
     user.todos = [todos];
     await todoRepository.save(todos);
 

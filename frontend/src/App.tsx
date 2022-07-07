@@ -45,7 +45,7 @@ const App: React.FC = () => {
             element={<VerificationPasswordPage />}
           />
           <Route
-            path="/todo/*"
+            path="/todo/active/:userId/*"
             element={<PrivateRoute children={<TodoPage />}></PrivateRoute>}
           >
             <Route

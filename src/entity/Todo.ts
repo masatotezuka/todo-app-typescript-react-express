@@ -5,6 +5,7 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
 } from "typeorm";
 import { User } from "./User";
 
@@ -24,6 +25,7 @@ export class Todo {
 
   // TODO:Userテーブルとリレーション
   @ManyToOne(() => User, (user) => user.todos)
+  @JoinColumn({ name: "userId", referencedColumnName: "id" })
   user: User;
 
   @Column("timestamptz", { default: null })
