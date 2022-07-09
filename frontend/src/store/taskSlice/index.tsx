@@ -25,6 +25,7 @@ const apiUrl = `${config.apiUrl}/todo`;
 export const createUserTodo = createAsyncThunk(
   "todo/createTodo",
   async (data: {
+    userId: string | undefined;
     title: string;
     description: string;
     deadline: Date;
@@ -36,8 +37,8 @@ export const createUserTodo = createAsyncThunk(
 
 export const fetchUserTodo = createAsyncThunk(
   "todo/fetchTodo",
-  async (): Promise<Todo[]> => {
-    const response = await fetchTodo(apiUrl);
+  async (userId: string | undefined): Promise<Todo[]> => {
+    const response = await fetchTodo(`${apiUrl}/${userId}`);
     return response.data;
   }
 );
@@ -161,6 +162,14 @@ const todoSelector = (state: RootState) => state.todos.todos;
 
 export const archivedTodoSelector = createSelector(todoSelector, (todos) =>
   todos.filter((todo) => todo.archivedAt)
+);
+
+export const completedTodoSelector = createSelector(todoSelector, (todos) =>
+  todos.filter((todo) => todo.completedAt && !todo.archivedAt)
+);
+
+export const uncompletedTodoSelector = createSelector(todoSelector, (todos) =>
+  todos.filter((todo) => !todo.completedAt && !todo.archivedAt)
 );
 
 export default todoSlice.reducer;

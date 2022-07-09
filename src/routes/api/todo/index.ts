@@ -6,8 +6,10 @@ import { User } from "../../../entity/User";
 const router = express.Router();
 const todoRepository = AppDataSource.getRepository(Todo);
 
-router.get("/", async (req, res, next) => {
+router.get("/:userId", async (req, res, next) => {
   try {
+    const userId = Number(req.params.userId);
+
     const todos = await todoRepository.find({
       select: {
         id: true,
@@ -17,6 +19,7 @@ router.get("/", async (req, res, next) => {
         completedAt: true,
         archivedAt: true,
       },
+      where: { user: { id: userId } },
     });
     res.status(200).json(todos);
   } catch (error) {
@@ -29,13 +32,16 @@ router.get("/", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const todos = new Todo();
+    const user = new User();
+    const userId = Number(req.body.userId);
+
+    user.id = userId;
     todos.title = req.body.title;
     todos.description = req.body.description;
     todos.deadline = req.body.deadline;
     todos.completedAt = null;
-    const user = new User();
-    user.todos = [todos];
-    await todoRepository.save(todos);
+    todos.user = user;
+    await AppDataSource.manager.save(todos);
 
     return res.status(200).json(todos);
   } catch (error) {

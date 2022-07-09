@@ -27,6 +27,7 @@ AppDataSource.initialize()
   .catch((err) => {
     console.error("Error during Data Source initialization:", err);
   });
+console.log("logout");
 
 app.use("/api", api);
 console.log(process.env.MAIL_PASS);

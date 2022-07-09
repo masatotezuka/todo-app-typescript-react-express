@@ -8,7 +8,7 @@ import {
 } from "../../../../../store/taskSlice";
 import { ArchivedItem } from "./ArchivedItem";
 
-export const ArchivedList = () => {
+export const ArchivedList = ({ userId }: { userId: string | undefined }) => {
   const archivedTodos = useAppSelector(archivedTodoSelector);
   const dispatch = useAppDispatch();
 

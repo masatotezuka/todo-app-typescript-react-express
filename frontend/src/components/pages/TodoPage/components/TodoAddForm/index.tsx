@@ -12,7 +12,7 @@ type Inputs = {
   deadline: Date;
 };
 
-export const TodoAddForm = () => {
+export const TodoAddForm = ({ userId }: { userId: string | undefined }) => {
   const {
     register,
     handleSubmit,
@@ -23,6 +23,7 @@ export const TodoAddForm = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     dispatch(
       createUserTodo({
+        userId: userId,
         title: data.title,
         description: data.description,
         deadline: data.deadline,

@@ -2,39 +2,52 @@ import React from "react";
 import styled from "styled-components";
 import { TodoAddForm } from "./components/TodoAddForm";
 import { TodoList } from "./components/TodoList";
-import { Link } from "../../parts/Link";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { ArchivedList } from "./components/ArchivedList";
-import { logout } from "../../../api";
-import config from "../../../config/config.json";
 import { Button } from "../../parts/Button/Button";
+import { StyledLink } from "../../parts/Link/StyledLink";
+import { useAppDispatch } from "../../../hooks";
+import { logoutUser } from "../../../store/authSlice";
 export const TodoPage: React.FC = () => {
   const lastName = localStorage.getItem("lastName");
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  const logoutHandler = async () => {
-    await logout(`${config.apiUrl}/logout`);
+  const { userId } = useParams();
+
+  const logoutHandler = () => {
+    dispatch(logoutUser());
     navigate("/", { replace: true });
   };
+
   return (
     <>
       <Wrapper>
         <Title>{lastName}さんのTodoリスト</Title>
-        <TodoAddForm></TodoAddForm>
+        <TodoAddForm userId={userId}></TodoAddForm>
         <Routes>
-          <Route path="active" element={<TodoList />}></Route>
-          <Route path="archived" element={<ArchivedList />}></Route>
+          <Route path="active" element={<TodoList userId={userId} />}></Route>
+          <Route
+            path="archived"
+            element={<ArchivedList userId={userId} />}
+          ></Route>
         </Routes>
         <BottomWrapper>
           <Routes>
             <Route
               path="archived"
-              element={<Link path="/todo/active" text="Todoリストへ"></Link>}
+              element={
+                <StyledLink to={`/todo/${userId}/active`}>
+                  Todoリストへ
+                </StyledLink>
+              }
             ></Route>
             <Route
               path="active"
               element={
-                <Link path="/todo/archived" text="アーカイブリストへ"></Link>
+                <StyledLink to={`/todo/${userId}/archived`}>
+                  アーカイブリストへ
+                </StyledLink>
               }
             ></Route>
           </Routes>

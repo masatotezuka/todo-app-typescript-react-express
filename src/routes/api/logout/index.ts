@@ -3,7 +3,7 @@ import ms = require("ms");
 
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
+router.post("/", (req, res, next) => {
   try {
     return res
       .status(200)
@@ -11,7 +11,13 @@ router.get("/", (req, res, next) => {
         httpOnly: true,
         expires: new Date(Date.now() + ms("1d")),
       })
-      .send("success");
+      .json({
+        user: {
+          id: undefined,
+          firstName: "",
+          lastName: "",
+        },
+      });
   } catch (error) {
     console.log(error);
   }

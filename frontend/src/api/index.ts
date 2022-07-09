@@ -29,7 +29,12 @@ export const fetchTodo = async (apiUrl: string) => {
 
 export const createTodo = async (
   apiUrl: string,
-  data: { title: string; description: string; deadline: Date }
+  data: {
+    userId: string | undefined;
+    title: string;
+    description: string;
+    deadline: Date;
+  }
 ) => {
   const res = await axios.post(apiUrl, data);
   return res;
@@ -82,19 +87,16 @@ export const checkJwtToken = async (apiUrl: string) => {
   return res;
 };
 
-//今は使用していない
-export const fetchUserData = async (apiUrl: string) => {
-  const res = await axios.get(apiUrl);
+export const logout = async (apiUrl: string) => {
+  const res = await axios.post(apiUrl);
   return res;
 };
 
-export const logout = async (apiUrl: string) => {
-  try {
-    await axios.get(apiUrl);
-    return;
-  } catch (error) {
-    console.log(error);
-  }
+export const requestPasswordReset = async (
+  apiUrl: string,
+  data: { email: string }
+) => {
+  axios.post(apiUrl, data);
 };
 
 export const verificationPassword = async (
@@ -107,13 +109,3 @@ export const verificationPassword = async (
     console.log(error);
   }
 };
-// export const resetPassword = async ()=>{
-//   try {
-//   await axios.post("http://localhost:8000/api/user/resetPassword", data);
-
-//   } catch (error) {
-//     console.log(error);
-
-//   }
-
-// }

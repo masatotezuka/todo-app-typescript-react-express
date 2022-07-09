@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../../../hooks";
+import { useAppDispatch, useAppSelector } from "../../../../hooks";
 import { signUpUser } from "../../../../store/authSlice";
 import { InputText } from "../../../parts/InputText";
 import { Button } from "../../../parts/Button/Button";
@@ -17,14 +17,20 @@ type SignUpInputs = {
 export const SingUpForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const userId = useAppSelector((state) => state.auth.user.id);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<SignUpInputs>();
+  useEffect(() => {
+    if (userId) {
+      navigate(`/todo/${userId}/active`);
+    }
+  }, [userId, navigate]);
+
   const onSubmit: SubmitHandler<SignUpInputs> = async (data) => {
     await dispatch(signUpUser(data));
-    navigate("/todo/active", { replace: true });
   };
   return (
     <>

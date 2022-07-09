@@ -39,20 +39,14 @@ const App: React.FC = () => {
           />
           <Route path="/email-send-complete" element={<EmailSendComplete />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
-          {/* TODO:tokenパラメータと一致したときにアクセスできるようにする */}
           <Route
             path={`/verification-password/:token`}
             element={<VerificationPasswordPage />}
           />
           <Route
-            path="/todo/*"
+            path="/todo/:userId/*"
             element={<PrivateRoute children={<TodoPage />}></PrivateRoute>}
-          >
-            <Route
-              path="archived"
-              element={<PrivateRoute children={<TodoPage />}></PrivateRoute>}
-            />
-          </Route>
+          ></Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Wrapper>
