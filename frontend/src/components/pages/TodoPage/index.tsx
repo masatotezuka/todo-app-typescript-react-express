@@ -17,18 +17,20 @@ export const TodoPage: React.FC = () => {
     await logout(`${config.apiUrl}/logout`);
     navigate("/", { replace: true });
   };
-  const { userId } = useParams();
-  console.log(userId);
 
-  const to: string = `/todo/${userId}/active/*`;
+  const { userId } = useParams();
+
   return (
     <>
       <Wrapper>
         <Title>{lastName}さんのTodoリスト</Title>
-        <TodoAddForm></TodoAddForm>
+        <TodoAddForm userId={userId}></TodoAddForm>
         <Routes>
-          <Route path="active" element={<TodoList />}></Route>
-          <Route path="archived" element={<ArchivedList />}></Route>
+          <Route path="active" element={<TodoList userId={userId} />}></Route>
+          <Route
+            path="archived"
+            element={<ArchivedList userId={userId} />}
+          ></Route>
         </Routes>
         <BottomWrapper>
           <Routes>

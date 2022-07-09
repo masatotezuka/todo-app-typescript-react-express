@@ -23,9 +23,7 @@ export class Todo {
   @Column({ nullable: true })
   deadline: string;
 
-  // TODO:Userテーブルとリレーション
-  @ManyToOne(() => User, (user) => user.todos)
-  @JoinColumn({ name: "userId", referencedColumnName: "id" })
+  @ManyToOne(() => User, (user) => user.todos, { cascade: true })
   user: User;
 
   @Column("timestamptz", { default: null })

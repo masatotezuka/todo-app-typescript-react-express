@@ -25,6 +25,7 @@ const apiUrl = `${config.apiUrl}/todo`;
 export const createUserTodo = createAsyncThunk(
   "todo/createTodo",
   async (data: {
+    userId: string | undefined;
     title: string;
     description: string;
     deadline: Date;
@@ -36,16 +37,22 @@ export const createUserTodo = createAsyncThunk(
 
 export const fetchUserTodo = createAsyncThunk(
   "todo/fetchTodo",
-  async (): Promise<Todo[]> => {
-    const response = await fetchTodo(apiUrl);
+  async (userId: string | undefined): Promise<Todo[]> => {
+    const response = await fetchTodo(`${apiUrl}/${userId}`);
     return response.data;
   }
 );
 
 export const deleteUserTodo = createAsyncThunk(
   "todo/deleteTodo",
-  async (id: number): Promise<number> => {
-    const response = await deleteTodo(apiUrl, id);
+  async ({
+    id,
+    userId,
+  }: {
+    id: number;
+    userId: string | undefined;
+  }): Promise<number> => {
+    const response = await deleteTodo(apiUrl, id, userId);
     return response.data;
   }
 );
@@ -81,14 +88,17 @@ export const toggleArchiveUserTodo = createAsyncThunk(
   async ({
     id,
     archivedAt,
+    userId,
   }: {
     id: number;
     archivedAt: Date | null;
+    userId: string | undefined;
   }): Promise<[{ id: number; archivedAt: Date | null }]> => {
     const response = await toggleArchiveTodo(
       `${apiUrl}/toggleArchiveTodo`,
       id,
-      archivedAt
+      archivedAt,
+      userId
     );
     return response.data;
   }

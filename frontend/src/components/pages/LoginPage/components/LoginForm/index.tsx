@@ -15,27 +15,21 @@ type LoginInputs = {
 export const LoginForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isLoggedIn, user } = useAppSelector((state) => state.auth);
+  const { user } = useAppSelector((state) => state.auth);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginInputs>();
-  console.log("test");
 
   useEffect(() => {
-    console.log(isLoggedIn);
-
     if (user.id) {
       navigate(`/todo/${user.id}/active`);
     }
-
-    // dispatch(reset());
-  }, [user, navigate, dispatch]);
+  }, [user, navigate]);
 
   const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
     await dispatch(loginUser(data));
-    // navigate("/", { replace: true });
   };
   return (
     <>

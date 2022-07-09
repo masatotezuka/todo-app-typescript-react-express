@@ -10,19 +10,19 @@ import {
   toggleArchiveUserTodo,
 } from "../../../../../store/taskSlice";
 
-export const TodoList = () => {
+export const TodoList = ({ userId }: { userId: string | undefined }) => {
   const dispatch = useAppDispatch();
   const { todos } = useAppSelector((state) => state.todos);
 
   useEffect(() => {
-    dispatch(fetchUserTodo());
-  }, [dispatch]);
+    dispatch(fetchUserTodo(userId));
+  }, [dispatch, userId]);
 
   const handleDeleteTodo = useCallback(
     (id: number) => {
-      dispatch(deleteUserTodo(id));
+      dispatch(deleteUserTodo({ id, userId }));
     },
-    [dispatch]
+    [dispatch, userId]
   );
 
   const handleChangeTodoStatus = useCallback(
@@ -34,17 +34,20 @@ export const TodoList = () => {
 
   const handleArchiveTodo = useCallback(
     (id: number, archivedAt: Date | null) => {
-      dispatch(toggleArchiveUserTodo({ id, archivedAt }));
+      dispatch(toggleArchiveUserTodo({ id, archivedAt, userId }));
     },
-    [dispatch]
+    [dispatch, userId]
   );
 
   const completedTodos = todos.filter(
     (todo) => todo.completedAt && !todo.archivedAt
   );
+
   const uncompletedTodos = todos.filter(
     (todo) => !todo.completedAt && !todo.archivedAt
   );
+
+  console.log(uncompletedTodos);
 
   return (
     <>

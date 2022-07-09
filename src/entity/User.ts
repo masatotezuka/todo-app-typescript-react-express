@@ -31,8 +31,7 @@ export class User {
   @Column({ type: "timestamptz", default: null })
   verificationTokenExpiredAt: Date | null = null;
 
-  // TODO:Todoテーブルとリレーション
-  @OneToMany(() => Todo, (todo) => todo.user, { cascade: true })
+  @OneToMany(() => Todo, (todo) => todo.user)
   todos: Todo[];
 
   @CreateDateColumn()

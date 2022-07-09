@@ -7,12 +7,6 @@ export const store = configureStore({
     auth: authReducer,
     todos: todoReducer,
   },
-  // middleware: (getDefaultMiddleware) =>
-  //   getDefaultMiddleware({
-  //     serializableCheck: {
-  //       ignoredActions: ["auth/signUp"],
-  //     },
-  //   }),
 });
 
 export type AppDispatch = typeof store.dispatch;

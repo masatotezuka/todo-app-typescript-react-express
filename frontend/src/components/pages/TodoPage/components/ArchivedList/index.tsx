@@ -8,19 +8,19 @@ import {
 } from "../../../../../store/taskSlice";
 import { ArchivedItem } from "./ArchivedItem";
 
-export const ArchivedList = () => {
+export const ArchivedList = ({ userId }: { userId: string | undefined }) => {
   const archivedTodos = useAppSelector(archivedTodoSelector);
   const dispatch = useAppDispatch();
 
   const handleDeleteTodo = useCallback(
     (id: number) => {
-      dispatch(deleteUserTodo(id));
+      dispatch(deleteUserTodo({ id, userId }));
     },
     [dispatch]
   );
   const handleActiveTodo = useCallback(
     (id: number, archivedAt: Date | null) => {
-      dispatch(toggleArchiveUserTodo({ id, archivedAt }));
+      dispatch(toggleArchiveUserTodo({ id, archivedAt, userId }));
     },
     [dispatch]
   );

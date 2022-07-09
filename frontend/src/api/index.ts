@@ -23,20 +23,31 @@ export type VerificationPassword = {
 };
 
 export const fetchTodo = async (apiUrl: string) => {
+  console.log(apiUrl);
+
   const res = await axios.get(apiUrl);
   return res;
 };
 
 export const createTodo = async (
   apiUrl: string,
-  data: { title: string; description: string; deadline: Date }
+  data: {
+    userId: string | undefined;
+    title: string;
+    description: string;
+    deadline: Date;
+  }
 ) => {
   const res = await axios.post(apiUrl, data);
   return res;
 };
 
-export const deleteTodo = async (apiUrl: string, id: number) => {
-  const res = await axios.delete(apiUrl, { data: { id: id } });
+export const deleteTodo = async (
+  apiUrl: string,
+  id: number,
+  userId: string | undefined
+) => {
+  const res = await axios.delete(apiUrl, { data: { id: id, userId: userId } });
   return res;
 };
 
@@ -59,10 +70,11 @@ export const updateTodo = async (apiUrl: string, data: Todo) => {
 export const toggleArchiveTodo = async (
   apiUrl: string,
   id: number,
-  archivedAt: Date | null
+  archivedAt: Date | null,
+  userId: string | undefined
 ) => {
   const res = await axios.put(apiUrl, {
-    data: { id: id, archivedAt: archivedAt },
+    data: { id: id, archivedAt: archivedAt, userId: userId },
   });
   return res;
 };
