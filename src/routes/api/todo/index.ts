@@ -19,6 +19,7 @@ router.get("/:userId", async (req, res, next) => {
         completedAt: true,
         archivedAt: true,
       },
+      where: { user: { id: userId } },
     });
     res.status(200).json(todos);
   } catch (error) {

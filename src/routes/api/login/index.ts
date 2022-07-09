@@ -11,7 +11,6 @@ const userRepository = AppDataSource.getRepository(User);
 router.post("/", async (req, res, next) => {
   try {
     const user = req.body;
-    console.log(user);
 
     if (!user.email || !user.password) {
       throw new UserError(400, "USERS_INVALID_VALUE");
@@ -39,7 +38,6 @@ router.post("/", async (req, res, next) => {
             firstName: result.firstName,
             lastName: result.lastName,
           },
-          jwtToken: jwtToken,
         });
       console.log(result.lastName);
     } else {

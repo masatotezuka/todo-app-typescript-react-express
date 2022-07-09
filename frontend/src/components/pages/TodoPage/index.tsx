@@ -2,23 +2,23 @@ import React from "react";
 import styled from "styled-components";
 import { TodoAddForm } from "./components/TodoAddForm";
 import { TodoList } from "./components/TodoList";
-import { Link } from "../../parts/Link";
 import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { ArchivedList } from "./components/ArchivedList";
-import { logout } from "../../../api";
-import config from "../../../config/config.json";
 import { Button } from "../../parts/Button/Button";
 import { StyledLink } from "../../parts/Link/StyledLink";
+import { useAppDispatch } from "../../../hooks";
+import { logoutUser } from "../../../store/authSlice";
 export const TodoPage: React.FC = () => {
   const lastName = localStorage.getItem("lastName");
   const navigate = useNavigate();
-
-  const logoutHandler = async () => {
-    await logout(`${config.apiUrl}/logout`);
-    navigate("/", { replace: true });
-  };
+  const dispatch = useAppDispatch();
 
   const { userId } = useParams();
+
+  const logoutHandler = () => {
+    dispatch(logoutUser());
+    navigate("/", { replace: true });
+  };
 
   return (
     <>

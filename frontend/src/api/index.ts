@@ -23,8 +23,6 @@ export type VerificationPassword = {
 };
 
 export const fetchTodo = async (apiUrl: string) => {
-  console.log(apiUrl);
-
   const res = await axios.get(apiUrl);
   return res;
 };
@@ -42,12 +40,8 @@ export const createTodo = async (
   return res;
 };
 
-export const deleteTodo = async (
-  apiUrl: string,
-  id: number,
-  userId: string | undefined
-) => {
-  const res = await axios.delete(apiUrl, { data: { id: id, userId: userId } });
+export const deleteTodo = async (apiUrl: string, id: number) => {
+  const res = await axios.delete(apiUrl, { data: { id: id } });
   return res;
 };
 
@@ -70,11 +64,10 @@ export const updateTodo = async (apiUrl: string, data: Todo) => {
 export const toggleArchiveTodo = async (
   apiUrl: string,
   id: number,
-  archivedAt: Date | null,
-  userId: string | undefined
+  archivedAt: Date | null
 ) => {
   const res = await axios.put(apiUrl, {
-    data: { id: id, archivedAt: archivedAt, userId: userId },
+    data: { id: id, archivedAt: archivedAt },
   });
   return res;
 };
@@ -94,19 +87,9 @@ export const checkJwtToken = async (apiUrl: string) => {
   return res;
 };
 
-//今は使用していない
-export const fetchUserData = async (apiUrl: string) => {
-  const res = await axios.get(apiUrl);
-  return res;
-};
-
 export const logout = async (apiUrl: string) => {
-  try {
-    await axios.get(apiUrl);
-    return;
-  } catch (error) {
-    console.log(error);
-  }
+  const res = await axios.post(apiUrl);
+  return res;
 };
 
 export const requestPasswordReset = async (

@@ -14,13 +14,13 @@ export const ArchivedList = ({ userId }: { userId: string | undefined }) => {
 
   const handleDeleteTodo = useCallback(
     (id: number) => {
-      dispatch(deleteUserTodo({ id, userId }));
+      dispatch(deleteUserTodo(id));
     },
     [dispatch]
   );
   const handleActiveTodo = useCallback(
     (id: number, archivedAt: Date | null) => {
-      dispatch(toggleArchiveUserTodo({ id, archivedAt, userId }));
+      dispatch(toggleArchiveUserTodo({ id, archivedAt }));
     },
     [dispatch]
   );

@@ -22,6 +22,8 @@ export const LoginForm = () => {
     formState: { errors },
   } = useForm<LoginInputs>();
 
+  console.log(user.id);
+
   useEffect(() => {
     if (user.id) {
       navigate(`/todo/${user.id}/active`);

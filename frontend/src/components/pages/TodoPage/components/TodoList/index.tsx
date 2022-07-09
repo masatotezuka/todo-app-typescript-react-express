@@ -8,11 +8,15 @@ import {
   deleteUserTodo,
   changeUserTodoStatus,
   toggleArchiveUserTodo,
+  completedTodoSelector,
+  uncompletedTodoSelector,
 } from "../../../../../store/taskSlice";
 
 export const TodoList = ({ userId }: { userId: string | undefined }) => {
   const dispatch = useAppDispatch();
-  const { todos } = useAppSelector((state) => state.todos);
+  const completedTodos = useAppSelector(completedTodoSelector);
+  const uncompletedTodos = useAppSelector(uncompletedTodoSelector);
+  console.log(userId);
 
   useEffect(() => {
     dispatch(fetchUserTodo(userId));
@@ -20,9 +24,9 @@ export const TodoList = ({ userId }: { userId: string | undefined }) => {
 
   const handleDeleteTodo = useCallback(
     (id: number) => {
-      dispatch(deleteUserTodo({ id, userId }));
+      dispatch(deleteUserTodo(id));
     },
-    [dispatch, userId]
+    [dispatch]
   );
 
   const handleChangeTodoStatus = useCallback(
@@ -34,20 +38,10 @@ export const TodoList = ({ userId }: { userId: string | undefined }) => {
 
   const handleArchiveTodo = useCallback(
     (id: number, archivedAt: Date | null) => {
-      dispatch(toggleArchiveUserTodo({ id, archivedAt, userId }));
+      dispatch(toggleArchiveUserTodo({ id, archivedAt }));
     },
-    [dispatch, userId]
+    [dispatch]
   );
-
-  const completedTodos = todos.filter(
-    (todo) => todo.completedAt && !todo.archivedAt
-  );
-
-  const uncompletedTodos = todos.filter(
-    (todo) => !todo.completedAt && !todo.archivedAt
-  );
-
-  console.log(uncompletedTodos);
 
   return (
     <>

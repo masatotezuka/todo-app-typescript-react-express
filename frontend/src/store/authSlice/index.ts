@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { User, signUp, login, fetchUserData } from "../../api";
+import { User, signUp, login, logout } from "../../api";
 import config from "../../config/config.json";
 type InitialState = {
   user: User;
-  isLoggedIn: boolean;
   status: "idle" | "pending" | "fulfilled" | "rejected";
   checkJwtStatus: "idle" | "pending" | "fulfilled" | "rejected";
 };
@@ -11,7 +10,6 @@ const apiUrl = config.apiUrl;
 
 const initialState: InitialState = {
   user: { email: "", lastName: "" },
-  isLoggedIn: false,
   status: "idle",
   checkJwtStatus: "idle",
 };
@@ -26,18 +24,18 @@ export const signUpUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
   "auth/login",
-  async (data: User): Promise<{ user: User; jwtToken: string }> => {
+  async (data: User): Promise<{ user: User }> => {
     const response = await login(`${apiUrl}/login`, data);
+    console.log(response.data);
+
     return response.data;
   }
 );
 
-export const logoutUser = createAsyncThunk("auth/logout", async () => {});
-
-export const fetchUserInfo = createAsyncThunk(
-  "auth/fetchUserInfo",
-  async (): Promise<User[]> => {
-    const response = await fetchUserData(`${apiUrl}/auth/user`);
+export const logoutUser = createAsyncThunk(
+  "auth/logout",
+  async (): Promise<{ user: User }> => {
+    const response = await logout(`${apiUrl}/logout`);
     return response.data;
   }
 );
@@ -64,8 +62,9 @@ export const authSlice = createSlice({
           localStorage.setItem("lastName", lastName);
         }
       })
-      .addCase(fetchUserInfo.fulfilled, (state, action) => {
-        state.user = action.payload[0];
+      .addCase(logoutUser.fulfilled, (state, action) => {
+        state.status = "fulfilled";
+        state.user = action.payload.user;
       });
   },
 });
