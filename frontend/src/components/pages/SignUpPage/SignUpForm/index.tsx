@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -23,11 +23,14 @@ export const SingUpForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<SignUpInputs>();
+  useEffect(() => {
+    if (userId) {
+      navigate(`/todo/${userId}/active`);
+    }
+  }, [userId, navigate]);
+
   const onSubmit: SubmitHandler<SignUpInputs> = async (data) => {
     await dispatch(signUpUser(data));
-    console.log(userId);
-
-    navigate("/todo/active", { replace: true });
   };
   return (
     <>
