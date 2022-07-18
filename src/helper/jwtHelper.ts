@@ -13,20 +13,7 @@ export class jwtHelper {
       const decoded = jwt.verify(token, this.jweSecret);
       return decoded;
     } catch (err) {
-      // err
       console.log(err);
     }
-
-    //     const result = jwt.verify(token, this.jweSecret);
-    // if (result) {
-    // } else {
-    // }
-    // , function (err, decoded) {
-    // if (err) {
-    //   throw new Error("INVALID_SIGNATURE");
-    // } else {
-    //   return decoded;
-    // }
-    // });
   }
 }
