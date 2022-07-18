@@ -1,11 +1,19 @@
 import * as jwt from "jsonwebtoken";
 
 export class jwtHelper {
+  static jweSecret = "secret123";
   static createToken() {
-    const jweSecret = "secret123";
-    const loginToken = jwt.sign({ foo: "bar" }, jweSecret, {
+    const token = jwt.sign({ foo: "bar" }, this.jweSecret, {
       expiresIn: "30d",
     });
-    return loginToken;
+    return token;
+  }
+  static verifyToken(token: string) {
+    try {
+      const decoded = jwt.verify(token, this.jweSecret);
+      return decoded;
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
