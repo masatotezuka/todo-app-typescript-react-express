@@ -23,19 +23,15 @@ router.get("/tokenVerification", (req, res, next) => {
   } else {
     return res.status(200).json({ isAuthenticated: false });
   }
-
-  jwt.verify(token, "secret123", function (err, decoded) {
-    if (err) {
-      next(err.message);
-    } else {
-      const token = jwtHelper.createToken();
-      res.cookie("jwtToken", token, {
-        httpOnly: true,
-        expires: new Date(Date.now() + ms("2d")),
-      });
-      res.status(200).json({ isAuthenticated: true });
-    }
-  });
+  const decode = jwtHelper.verifyToken(token);
+  if (decode) {
+    const token = jwtHelper.createToken();
+    res.cookie("jwtToken", token, {
+      httpOnly: true,
+      expires: new Date(Date.now() + ms("2d")),
+    });
+    res.status(200).json({ isAuthenticated: true });
+  }
 });
 
 router.use("/todo", todo);

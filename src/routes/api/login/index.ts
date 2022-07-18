@@ -10,6 +10,7 @@ const router = express.Router();
 const userRepository = AppDataSource.getRepository(User);
 router.post("/", async (req, res, next) => {
   try {
+    console.log("login");
     const user = req.body;
 
     if (!user.email || !user.password) {

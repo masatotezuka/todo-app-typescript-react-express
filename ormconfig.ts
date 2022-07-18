@@ -15,6 +15,3 @@ export const AppDataSource = new DataSource({
   subscribers: [],
   migrationsTableName: "migration",
 });
-AppDataSource.initialize();
-
-// export default AppDataSource;

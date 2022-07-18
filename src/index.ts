@@ -1,6 +1,4 @@
 import * as express from "express";
-import { Request, Response, NextFunction } from "express";
-import { User } from "./entity/User";
 import { AppDataSource } from "../ormconfig";
 import api from "./routes";
 import * as cors from "cors";
@@ -10,7 +8,6 @@ import * as cookieParser from "cookie-parser";
 dotenv.config();
 
 const app = express();
-
 const corsOptions: cors.CorsOptions = {
   origin: "http://localhost:3000",
   credentials: true,
@@ -27,9 +24,7 @@ AppDataSource.initialize()
   .catch((err) => {
     console.error("Error during Data Source initialization:", err);
   });
-console.log("logout");
 
 app.use("/api", api);
-console.log(process.env.MAIL_PASS);
 
 app.listen(8000);
