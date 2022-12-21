@@ -3,7 +3,7 @@
 認証付きの簡易Todoアプリです。
 
 ## 開発環境
-MacBook Pro 14インチー（M1 Pro）
+MacBook Pro 14インチ（M1 Pro）
 
 ## 使用技術
 - フロントエンド：TypeScript/React/redux-toolkit
