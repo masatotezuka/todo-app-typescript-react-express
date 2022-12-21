@@ -16,7 +16,6 @@ export const TodoList = ({ userId }: { userId: string | undefined }) => {
   const dispatch = useAppDispatch();
   const completedTodos = useAppSelector(completedTodoSelector);
   const uncompletedTodos = useAppSelector(uncompletedTodoSelector);
-  console.log(userId);
 
   useEffect(() => {
     dispatch(fetchUserTodo(userId));
