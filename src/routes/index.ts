@@ -1,5 +1,4 @@
 import * as express from "express";
-import { Request, Response, NextFunction } from "express";
 import signUp from "./api/signUp";
 import login from "./api/login";
 import logout from "./api/logout";
@@ -7,7 +6,6 @@ import todo from "./api/todo";
 import user from "./api/user";
 import { jwtHelper } from "../helper/jwtHelper";
 import ms = require("ms");
-import * as jwt from "jsonwebtoken";
 
 const router = express.Router();
 

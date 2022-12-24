@@ -103,9 +103,5 @@ export const verificationPassword = async (
   apiUrl: string,
   data: VerificationPassword
 ) => {
-  try {
-    await axios.put(apiUrl, { data });
-  } catch (error) {
-    console.log(error);
-  }
+  await axios.put(apiUrl, { data });
 };
