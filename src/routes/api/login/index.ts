@@ -26,13 +26,14 @@ router.post("/", async (req, res, next) => {
 
     const match = await bcrypt.compare(user.password, result.password);
     if (match) {
-      const jwtToken = jwtHelper.createToken();
+      const jwtToken = jwtHelper.createToken(result.id);
       res
         .status(200)
         .cookie("jwtToken", jwtToken, {
           httpOnly: true,
           expires: new Date(Date.now() + ms("2d")),
         })
+        .cookie("userId", result.id)
         .json({
           user: {
             id: result.id,

@@ -2,8 +2,8 @@ import * as jwt from "jsonwebtoken";
 
 export class jwtHelper {
   static jweSecret = "secret123";
-  static createToken() {
-    const token = jwt.sign({ foo: "bar" }, this.jweSecret, {
+  static createToken(userId: number) {
+    const token = jwt.sign({ payload: userId }, this.jweSecret, {
       expiresIn: "30d",
     });
     return token;

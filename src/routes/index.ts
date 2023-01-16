@@ -22,8 +22,9 @@ router.get("/tokenVerification", (req, res, next) => {
     return res.status(200).json({ isAuthenticated: false });
   }
   const decode = jwtHelper.verifyToken(token);
-  if (decode) {
-    const token = jwtHelper.createToken();
+  if (decode && req.cookies.userId) {
+    const userId = Number(req.cookies.userId);
+    const token = jwtHelper.createToken(userId);
     res.cookie("jwtToken", token, {
       httpOnly: true,
       expires: new Date(Date.now() + ms("2d")),
