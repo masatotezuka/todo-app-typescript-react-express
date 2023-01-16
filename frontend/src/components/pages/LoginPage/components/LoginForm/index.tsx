@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { InputText } from "../../../../parts/InputText";
 import styled from "styled-components";
@@ -6,6 +6,7 @@ import { Button } from "../../../../parts/Button/Button";
 import { useAppDispatch, useAppSelector } from "../../../../../hooks";
 import { loginUser } from "../../../../../store/authSlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 type LoginInputs = {
   email: string;
@@ -19,10 +20,9 @@ export const LoginForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<LoginInputs>();
-
-  console.log(user.id);
 
   useEffect(() => {
     if (user.id) {
@@ -30,9 +30,15 @@ export const LoginForm = () => {
     }
   }, [user, navigate]);
 
-  const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
-    await dispatch(loginUser(data));
+  const onSubmit: SubmitHandler<LoginInputs> = (data) => {
+    dispatch(loginUser(data))
+      .unwrap()
+      .catch(() => {
+        toast.error("ログイン情報が正しくありません。");
+      });
+    reset();
   };
+
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)}>
