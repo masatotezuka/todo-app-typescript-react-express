@@ -4,7 +4,7 @@ export class jwtHelper {
   static jweSecret = "secret123";
   static createToken(userId: number) {
     const token = jwt.sign({ payload: userId }, this.jweSecret, {
-      expiresIn: "30d",
+      expiresIn: "2d",
     });
     return token;
   }
