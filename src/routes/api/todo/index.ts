@@ -6,9 +6,13 @@ import { User } from "../../../entity/User";
 const router = express.Router();
 const todoRepository = AppDataSource.getRepository(Todo);
 
-router.get("/:userId", async (req, res, next) => {
+router.get("/:userId", async (req: any, res, next) => {
   try {
     const userId = Number(req.params.userId);
+    console.log(req.cookies.userId);
+    console.log(userId);
+
+    if (userId !== req.cookies.userId) return;
 
     const todos = await todoRepository.find({
       select: {
