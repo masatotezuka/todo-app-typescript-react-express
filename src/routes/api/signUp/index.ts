@@ -50,6 +50,7 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
         httpOnly: true,
         expires: new Date(Date.now() + ms("2d")),
       })
+      .cookie("userId", result[0].id)
       .json(result);
   } catch (error) {
     if (error instanceof Error) {
